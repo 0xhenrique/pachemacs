@@ -1,115 +1,228 @@
-;;; init.el
+;;; Personal configuration -*- lexical-binding: t -*-
 
-;; We up the gc threshold to temporarily prevent it from running, then reset it later by
-;; enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
-(setq gc-cons-threshold most-positive-fixnum)
+;; Save the contents of this file under ~/.emacs.d/init.el
+;; Do not forget to use Emacs' built-in help system:
+;; Use C-h C-h to get an overview of all help commands.  All you
+;; need to know about Emacs (what commands exist, what functions do,
+;; what variables specify), the help system can provide.
 
-;; https://www.masteringemacs.org/article/speed-up-emacs-libjansson-native-elisp-compilation
-(if (and (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (setq comp-deferred-compilation t
-          package-native-compile t)
-  (message "Native complation is *not* available, lsp performance will suffer..."))
-
-(unless (functionp 'json-serialize)
-  (message "Native JSON is *not* available, lsp performance will suffer..."))
-
-;; Increase the amount of data which Emacs reads from the process. 
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
-
-;; Do not steal focus while doing async compilations.
-(setq warning-suppress-types '((comp)))
-
-(setq comp-deferred-compilation t)
-
-(defvar startup/file-name-handler-alist file-name-handler-alist)
-(setq file-name-handler-alist nil)
-
-(defun startup/revert-file-name-handler-alist ()
-  (setq file-name-handler-alist startup/file-name-handler-alist))
-
-(add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(setq straight-check-for-modifications '(check-on-save find-when-checking))
-;; Setup straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; Install use-package using straight.el
-(straight-use-package 'use-package)
-
-;; Makes :straight t by default
-(defvar straight-use-package-by-default)
-(setq straight-use-package-by-default t)
-(setq straight-fix-flycheck t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;; Enable MELPA
 (require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
 
-;; GCMH - the Garbage Collector Magic Hack
-(use-package gcmh
-  :diminish
-  :custom
-  (gcmh-idle-delay 1000)
-  (gcmh-high-cons-threshold (* 16 1024 1024)) ;; 16 MB
-  :hook (after-init . gcmh-mode))
+;; Get some nice themes
+(unless (package-installed-p 'gruvbox-theme)
+  (package-install 'gruvbox-theme))
+(unless (package-installed-p 'catppuccin-theme)
+  (package-install 'catppuccin-theme))
 
-(setq-default shell-file-name "/bin/sh")
+;; Load a custom theme
+(load-theme 'gruvbox-dark-soft t)
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "firefox-developer-edition")
+;; Set default font face
+(set-face-attribute 'default nil :font "Iosevka Comfy")
 
-(straight-use-package 'org)
+;; Disable the menu bar
+(menu-bar-mode -1)
 
-;; Add local packages
-(add-to-list 'load-path "~/.emacs.d/local")
+;; Disable the tool bar
+(tool-bar-mode -1)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(awesome-tray-mode-line-active-color "#AA5544")
- '(custom-enabled-themes '(gruvbox))
- '(custom-safe-themes
-   '("72ed8b6bffe0bfa8d097810649fd57d2b598deef47c992920aef8b5d9599eefe" "d80952c58cf1b06d936b1392c38230b74ae1a2a6729594770762dc0779ac66b7" "b1a691bb67bd8bd85b76998caf2386c9a7b2ac98a116534071364ed6489b695d" "8c0b4b10f99fc2bfdbcf24b29152742aa9b414ce9a7244be12dc963c8ff03a23"))
- '(highlight-indent-guides-auto-odd-face-perc 5)
- '(org-agenda-files nil)
- '(org-format-latex-options
-   '(:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.5 :matchers
-                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-selection ((t (:inherit company-tooltip-selection :extend t))))
- '(fixed-pitch ((t (:family "Iosevka Comfy"))))
- '(homoglyph ((t (:foreground "cornflower blue"))))
- '(nobreak-hyphen ((t (:foreground "cornflower blue"))))
- '(org-level-1 ((t (:inherit outline-1 :height 1.5))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.3))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
- '(variable-pitch ((t (:family "Iosevka Comfy")))))
+;; Disable the scroll bars
+(scroll-bar-mode -1)
 
-;; Loads config
-(when (file-readable-p "~/.emacs.d/config.org")
-  (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+;;; Completion framework
+(unless (package-installed-p 'vertico)
+  (package-install 'vertico))
 
+;; Enable completion by narrowing
+(vertico-mode t)
 
-;;; init.el ends here
+;; Improve directory navigation
+(with-eval-after-load 'vertico
+  (define-key vertico-map (kbd "RET") #'vertico-directory-enter)
+  (define-key vertico-map (kbd "DEL") #'vertico-directory-delete-word)
+  (define-key vertico-map (kbd "M-d") #'vertico-directory-delete-char))
+(setq read-buffer-completion-ignore-case t
+      read-file-name-completion-ignore-case t
+      completion-ignore-case t)
+
+;; Enable line numbering by default
+(global-display-line-numbers-mode t)
+(setq display-line-numbers-type 'relative)
+
+;; Automatically pair parentheses
+(electric-pair-mode t)
+
+;;; LSP Support
+(unless (package-installed-p 'eglot)
+  (package-install 'eglot))
+
+;; Enable LSP support by default in programming buffers
+(add-hook 'prog-mode-hook #'eglot-ensure)
+
+;; Create a memorable alias for `eglot-ensure'.
+(defalias 'start-lsp-server #'eglot)
+
+;; Make eldoc work the way I want
+(setq eldoc-echo-area-use-multiline-p nil)
+(setq eldoc-message-function #'eldoc-minibuffer-message)
+
+;;; Inline static analysis
+
+;; Enabled inline static analysis
+(add-hook 'prog-mode-hook #'flymake-mode)
+
+;;; Pop-up completion
+(unless (package-installed-p 'corfu)
+  (package-install 'corfu))
+
+;; Enable autocompletion by default in programming buffers
+(add-hook 'prog-mode-hook #'corfu-mode)
+
+;;; Git client
+;;(unless (package-installed-p 'magit)
+;;  (package-install 'magit))
+
+;; Bind the `magit-status' command to a convenient key.
+;;(global-set-key (kbd "C-c g") #'magit-status)
+
+;;; Indication of local VCS changes
+(unless (package-installed-p 'diff-hl)
+  (package-install 'diff-hl))
+
+;; Enable `diff-hl' support by default in programming buffers
+;;(add-hook 'prog-mode-hook #'diff-hl-mode)
+
+;;; Go Support
+(unless (package-installed-p 'go-mode)
+  (package-install 'go-mode))
+
+;;; JSON Support
+(unless (package-installed-p 'json-mode)
+  (package-install 'json-mode))
+
+;;; Lua Support
+(unless (package-installed-p 'lua-mode)
+  (package-install 'lua-mode))
+
+;;; PHP Support
+(unless (package-installed-p 'php-mode)
+  (package-install 'php-mode))
+
+;;; Rust Support
+(unless (package-installed-p 'rust-mode)
+  (package-install 'rust-mode))
+
+;;; Additional Lisp support
+(unless (package-installed-p 'sly)
+  (package-install 'sly))
+
+;;; Typescript Support
+(unless (package-installed-p 'typescript-mode)
+  (package-install 'typescript-mode))
+
+;;; YAML Support
+(unless (package-installed-p 'yaml-mode)
+  (package-install 'yaml-mode))
+
+;;; Markdown support
+(unless (package-installed-p 'markdown-mode)
+  (package-install 'markdown-mode))
+
+;;; Outline-based notes management and organizer
+
+;;; EditorConfig support
+(unless (package-installed-p 'editorconfig)
+  (package-install 'editorconfig))
+
+;; Enable EditorConfig
+(editorconfig-mode t)
+
+;;; In-Emacs Terminal Emulation
+(unless (package-installed-p 'eat)
+  (package-install 'eat))
+
+;; Close the terminal buffer when the shell terminates.
+(setq eat-kill-buffer-on-exit t)
+
+;; Enable mouse-support.
+(setq eat-enable-mouse t)
+
+(unless (package-installed-p 'which-key)
+  (package-install 'which-key))
+(which-key-mode)
+
+;;; Vim Emulation
+(unless (package-installed-p 'evil)
+  (package-install 'evil))
+
+;; Enable Vim emulation
+(evil-mode t)
+
+;; Enable Vim emulation in programming buffers
+(add-hook 'prog-mode-hook #'evil-local-mode)
+
+;; Miscellaneous options
+(setq-default major-mode
+              (lambda () ; guess major mode from file name
+                (unless buffer-file-name
+                  (let ((buffer-file-name (buffer-name)))
+                    (set-auto-mode)))))
+(setq confirm-kill-emacs #'yes-or-no-p)
+(setq window-resize-pixelwise t)
+(setq frame-resize-pixelwise t)
+(save-place-mode t)
+(savehist-mode t)
+(recentf-mode t)
+(defalias 'yes-or-no #'y-or-n-p)
+
+;; Store automatic customisation options elsewhere
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+;; Custom dashboard
+(unless (package-installed-p 'dashboard)
+  (package-install 'dashboard))
+
+(use-package dashboard
+  :preface
+  (defun create-scratch-buffer ()
+     "Create a scratch"
+     (interactive)
+     (switch-to-buffer (get-buffer-create "*scratch*"))
+     (lisp-interaction-mode))
+  :config
+  (dashboard-setup-startup-hook)
+  (dashboard-modify-heading-icons '((recents . "file-text")
+                                    (bookmarks . "book")))
+
+  (setq dashboard-banner-logo-title "H M - 2 0 3 0")
+  (setq dashboard-banner-logo-title "\n")
+  (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
+  (setq dashboard-center-content t)
+  (setq dashboard-footer-messages '("\"I... I'm confused again.\""))
+  (setq dashboard-footer-icon "")
+  (setq dashboard-set-navigator t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)))
+
+  (setq dashboard-navigator-buttons
+        `(;; line1
+          ((,nil
+            "Open scratch buffer"
+            "Switch to the scratch buffer"
+            (lambda (&rest _) (create-scratch-buffer))
+            'default)
+           (nil
+            "Open init.el"
+            "Open init.el for fast configuration"
+            (lambda (&rest _) (find-file "~/.emacs.d/init.el"))
+            'default)))))
+;; With Emacs as daemon mode, when running `emacsclient`, open *dashboard* instead of *scratch*.
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
