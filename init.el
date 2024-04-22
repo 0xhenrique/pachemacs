@@ -18,7 +18,7 @@
   (package-install 'catppuccin-theme))
 
 ;; Load a custom theme
-(load-theme 'gruvbox-dark-soft t)
+(load-theme 'catppuccin t)
 
 ;; Set default font face
 (set-face-attribute 'default nil :font "Iosevka Comfy")
@@ -161,6 +161,9 @@
 ;; Enable Vim emulation
 (evil-mode t)
 
+;; Redo command
+(evil-set-undo-system 'undo-redo)
+
 ;; Enable Vim emulation in programming buffers
 (add-hook 'prog-mode-hook #'evil-local-mode)
 
@@ -201,7 +204,7 @@
 
   (setq dashboard-banner-logo-title "H M - 2 0 3 0")
   (setq dashboard-banner-logo-title "\n")
-  (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
+  (setq dashboard-startup-banner "~/.emacs.d/img/artoria-3.png")
   (setq dashboard-center-content t)
   (setq dashboard-footer-messages '("\"I... I'm confused again.\""))
   (setq dashboard-footer-icon "")

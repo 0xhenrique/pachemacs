@@ -1,0 +1,5 @@
+#+TITLE: Personal Emacs config
+#+LANGUAGE: en
+
+
+[[./screenshot.png]]
