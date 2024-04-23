@@ -37,7 +37,16 @@
   (package-install 'vertico))
 
 ;; Enable completion by narrowing
-(vertico-mode t)
+;(vertico-mode t)
+(use-package vertico
+  :ensure t
+  :custom
+  (vertico-cycle t)
+  (read-buffer-completion-ignore-case t)
+  (read-file-name-completion-ignore-case t)
+  (completion-styles '(basic substring partial-completion flex))
+  :init
+  (vertico-mode))
 
 ;; Improve directory navigation
 (with-eval-after-load 'vertico
@@ -59,6 +68,24 @@
 (unless (package-installed-p 'eglot)
   (package-install 'eglot))
 
+;; Adds LSP support. Note that you must have the respective LSP
+;; server installed on your machine to use it with Eglot. e.g.
+;; rust-analyzer to use Eglot with `rust-mode'.
+(use-package eglot
+  :ensure t
+  :bind (("s-<mouse-1>" . eglot-find-implementation)
+         ("C-c ." . eglot-code-action-quickfix))
+  ;; Add your programming modes here to automatically start Eglot,
+  ;; assuming you have the respective LSP server installed.
+  :hook ((web-mode . eglot-ensure)
+         (rust-mode . eglot-ensure))
+  :config
+  ;; You can configure additional LSP servers by modifying
+  ;; `eglot-server-programs'. The following tells eglot to use TypeScript
+  ;; language server when working in `web-mode'.
+  (add-to-list 'eglot-server-programs
+               '(web-mode . ("typescript-language-server" "--stdio"))))
+
 ;; Enable LSP support by default in programming buffers
 (add-hook 'prog-mode-hook #'eglot-ensure)
 
@@ -77,6 +104,21 @@
 ;;; Pop-up completion
 (unless (package-installed-p 'corfu)
   (package-install 'corfu))
+
+;; Adds intellisense-style code completion at point that works great
+;; with LSP via Eglot. You'll likely want to configure this one to
+;; match your editing preferences, there's no one-size-fits-all
+;; solution.
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  ;; You may want to play with delay/prefix/styles to suit your preferences.
+  (corfu-auto-delay 0)
+  (corfu-auto-prefix 0)
+  (completion-styles '(basic)))
 
 ;; Enable autocompletion by default in programming buffers
 (add-hook 'prog-mode-hook #'corfu-mode)
@@ -229,3 +271,36 @@
             'default)))))
 ;; With Emacs as daemon mode, when running `emacsclient`, open *dashboard* instead of *scratch*.
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+
+;; TypeScript, JS, and JSX/TSX support.
+(use-package web-mode
+  :ensure t
+  :mode (("\\.ts\\'" . web-mode)
+         ("\\.js\\'" . web-mode)
+         ("\\.mjs\\'" . web-mode)
+         ("\\.tsx\\'" . web-mode)
+         ("\\.jsx\\'" . web-mode))
+  :custom
+  (web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+  (web-mode-code-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-markup-indent-offset 2)
+  (web-mode-enable-auto-quoting nil))
+
+(use-package rust-mode
+  :ensure t
+  :bind (:map rust-mode-map
+	      ("C-c C-r" . 'rust-run)
+	      ("C-c C-c" . 'rust-compile)
+	      ("C-c C-f" . 'rust-format-buffer)
+	      ("C-c C-t" . 'rust-test))
+  :hook (rust-mode . prettify-symbols-mode))
+
+(use-package yaml-mode
+  :ensure t)
+
+;; Note that `php-mode' assumes php code is separate from HTML.
+;; If you prefer working with PHP and HTML in a single file you
+;; may prefer `web-mode'.
+(use-package php-mode
+  :ensure t)
