@@ -11,26 +11,27 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-;; Get some nice themes
+;; Get some nice themes and icons
 (unless (package-installed-p 'gruvbox-theme)
   (package-install 'gruvbox-theme))
 (unless (package-installed-p 'catppuccin-theme)
   (package-install 'catppuccin-theme))
 
+(use-package all-the-icons
+  :if (display-graphic-p))
+
 ;; Load a custom theme
-(load-theme 'catppuccin t)
+(load-theme 'modus-vivendi t)
 
 ;; Set default font face
 (set-face-attribute 'default nil :font "Iosevka Comfy")
 
-;; Disable the menu bar
+;; Some basic visual tweak
 (menu-bar-mode -1)
-
-;; Disable the tool bar
 (tool-bar-mode -1)
-
-;; Disable the scroll bars
 (scroll-bar-mode -1)
+(when window-system (add-hook 'prog-mode-hook 'hl-line-mode))
+(setq scroll-conservatively 100)
 
 ;;; Completion framework
 (unless (package-installed-p 'vertico)
@@ -68,6 +69,30 @@
 (unless (package-installed-p 'eglot)
   (package-install 'eglot))
 
+(unless (package-installed-p 'lsp-mode)
+  (package-install 'lsp-mode))
+
+;;(unless (package-installed-p 'lsp-ui)
+;;  (package-install 'lsp-ui))
+;;
+;;; Vue Support
+(unless (package-installed-p 'vue-mode)
+  (package-install 'vue-mode))
+;;(add-hook 'vue-mode-hook #'lsp)
+
+;;; Flycheck Support
+(unless (package-installed-p 'flycheck)
+  (package-install 'flycheck))
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;;; NVM for Node development
+(unless (package-installed-p 'nvm)
+  (package-install 'nvm))
+
+;;; Music Player inside Emacs!
+(unless (package-installed-p 'emms)
+  (package-install 'emms))
+
 ;; Adds LSP support. Note that you must have the respective LSP
 ;; server installed on your machine to use it with Eglot. e.g.
 ;; rust-analyzer to use Eglot with `rust-mode'.
@@ -84,17 +109,18 @@
   ;; `eglot-server-programs'. The following tells eglot to use TypeScript
   ;; language server when working in `web-mode'.
   (add-to-list 'eglot-server-programs
-               '(web-mode . ("typescript-language-server" "--stdio"))))
+               '(web-mode . ("typescript-language-server" "--stdio")))
+  )
 
 ;; Enable LSP support by default in programming buffers
-(add-hook 'prog-mode-hook #'eglot-ensure)
+;;(add-hook 'prog-mode-hook #'eglot-ensure)
 
 ;; Create a memorable alias for `eglot-ensure'.
 (defalias 'start-lsp-server #'eglot)
 
 ;; Make eldoc work the way I want
-(setq eldoc-echo-area-use-multiline-p nil)
-(setq eldoc-message-function #'eldoc-minibuffer-message)
+;;(setq eldoc-echo-area-use-multiline-p nil)
+;;(setq eldoc-message-function #'eldoc-minibuffer-message)
 
 ;;; Inline static analysis
 
@@ -113,22 +139,24 @@
   :ensure t
   :init
   (global-corfu-mode)
+  ;;:bind
+  ;;(("M-b" . completion-at-point))
   :custom
   (corfu-auto t)
   ;; You may want to play with delay/prefix/styles to suit your preferences.
   (corfu-auto-delay 0)
-  (corfu-auto-prefix 0)
+  (corfu-auto-prefix 3)
   (completion-styles '(basic)))
 
 ;; Enable autocompletion by default in programming buffers
 (add-hook 'prog-mode-hook #'corfu-mode)
 
 ;;; Git client
-;;(unless (package-installed-p 'magit)
-;;  (package-install 'magit))
+(unless (package-installed-p 'magit)
+  (package-install 'magit))
 
 ;; Bind the `magit-status' command to a convenient key.
-;;(global-set-key (kbd "C-c g") #'magit-status)
+(global-set-key (kbd "C-c g") #'magit-status)
 
 ;;; Indication of local VCS changes
 (unless (package-installed-p 'diff-hl)
@@ -172,6 +200,46 @@
 ;;; Markdown support
 (unless (package-installed-p 'markdown-mode)
   (package-install 'markdown-mode))
+
+;;; Yasnippets FTW
+(unless (package-installed-p 'yasnippet)
+  (package-install 'yasnippet))
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+;;(define-key yas-minor-mode-map [(tab)] nil)
+;;(define-key yas-minor-mode-map (kbd "TAB") nil)
+(use-package yasnippet
+  :ensure
+  :bind
+  (:map yas-minor-mode-map
+        ("C-'". yas-expand)
+        ([(tab)] . nil)
+        ("TAB" . nil))
+  :config
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook 'yas-minor-mode))
+(yas-global-mode 1)
+
+
+
+(unless (package-installed-p 'move-text)
+  (package-install 'move-text))
+(global-set-key (kbd "M-p") 'move-text-up)
+(global-set-key (kbd "M-n") 'move-text-down)
+
+;;; Multiple cursors
+(unless (package-installed-p 'evil-mc)
+  (package-install 'evil-mc))
+(global-evil-mc-mode 1)
+;;(unless (package-installed-p 'evil-multiedit)
+;;  (package-install 'evil-multiedit))
+
+;; (unless (package-installed-p 'multiple-cursors)
+;;   (package-install 'multiple-cursors))
+;; (multiple-cursors-mode t)
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;;; Outline-based notes management and organizer
 
@@ -228,7 +296,7 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; Custom dashboard
+;;; Custom dashboard
 (unless (package-installed-p 'dashboard)
   (package-install 'dashboard))
 
@@ -244,31 +312,73 @@
   (dashboard-modify-heading-icons '((recents . "file-text")
                                     (bookmarks . "book")))
 
-  (setq dashboard-banner-logo-title "H M - 2 0 3 0")
-  (setq dashboard-banner-logo-title "\n")
-  (setq dashboard-startup-banner "~/.emacs.d/img/artoria-3.png")
-  (setq dashboard-center-content t)
-  (setq dashboard-footer-messages '("\"I... I'm confused again.\""))
-  (setq dashboard-footer-icon "")
-  (setq dashboard-set-navigator t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-items '((recents  . 5)
-                          (bookmarks . 5)
-                          (projects . 5)))
+  (setq
+   dashboard-startup-banner "~/.emacs.d/ascii/3.txt"
+   dashboard-banner-logo-title "H M - 2 0 3 0"
+   dashboard-banner-logo-title "\n"
+   dashboard-center-content t
+   dashboard-vertically-center-content t
+   dashboard-footer-messages '("
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣶⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⣿⣿⣟⡿⣿⣿⣿⣿⡿⡁⣿⣿⣿⠀⠀⠀⠀⣀⣤⡾⣦⣄⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣀⣴⣾⠋⠉⣻⡷⢦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠃⢽⣿⣿⠿⢻⠏⠑⢀⣿⣿⣿⣀⣠⡶⠋⢹⣷⣄⢠⣿⣿⡶⣤⡀⠀⠀⠀
+⠀⠀⣀⣴⣾⢫⣿⡿⠀⣾⣿⠇⠀⣼⡟⠛⠛⣻⣿⣧⣀⣴⣶⣾⣿⣿⣷⣶⣄⣰⡟⣻⣿⡟⠉⣿⣷⡀⠘⣿⣿⠀⠙⢿⣇⢼⣿⣷⢦⣄
+⣴⡞⢹⣿⡿⣸⠟⠀⠀⣿⠏⠀⢸⣿⡟⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣿⣿⡇⠀⠻⣿⡇⠀⠈⢻⠀⠀⠀⠛⠌⠻⣿⡠⣿
+⣿⡏⡿⠏⠀⠁⠀⠀⠀⠃⠀⠀⠸⡿⠀⠀⢸⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣙⣿⠁⠀⠀⠹⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠃⠙
+⠋⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⢘⠃⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠸⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⠛⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣰⡀⢀⡀⣻⣄⡀⢀⣠⣴⣿⣿⣿⠃⢠⣿⣿⣿⣿⣿⣿⣿⣿⡆⠹⣿⣿⣿⣶⣄⡀⢀⣰⣏⣀⣀⣠⣇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠈⠉⠛⠋⠁⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠈⠙⠛⠛⠉⠉⠛⠀⠀⠀⠀⠀⠀⠀⠀
+")
+   dashboard-footer-icon ""
+   ;;dashboard-set-navigator t
+   ;;dashboard-set-heading-icons t
+   dashboard-items '((recents  . 10)
+		     (bookmarks . 5)
+		     (projects . 5))
+   )
 
-  (setq dashboard-navigator-buttons
-        `(;; line1
-          ((,nil
-            "Open scratch buffer"
-            "Switch to the scratch buffer"
-            (lambda (&rest _) (create-scratch-buffer))
-            'default)
-           (nil
-            "Open init.el"
-            "Open init.el for fast configuration"
-            (lambda (&rest _) (find-file "~/.emacs.d/init.el"))
-            'default)))))
+  ;;(setq dashboard-icon-type 'all-the-icons)
+  ;;(setq dashboard-display-icons-p t)
+  ;;(setq dashboard-set-heading-icons t)
+  ;;(setq dashboard-set-file-icons t)
+
+  (setq dashboard-startupify-list '(
+				    ;;dashboard-insert-newline
+				    ;;dashboard-insert-banner-title
+				    ;;dashboard-insert-footer
+				    ;;dashboard-insert-newline
+				    ;;dashboard-insert-navigator
+				    ;;dashboard-insert-newline
+				    dashboard-insert-items
+				    dashboard-insert-banner
+				    dashboard-insert-init-info))
+				    ;;dashboard-insert-newline))
+
+  (setq dashboard-navigation-cycle t)
+  (setq dashboard-heading-shorcut-format " [%s]")
+  (setq dashboard-item-shortcuts '((recents   . "r")
+				   (marks . "m")
+				   (projects  . "p"))))
+
+;;  (setq dashboard-navigator-buttons
+;;        `(
+;;          ((,"<C-p C-0>"
+;;            "Open scratch buffer"
+;;            "Switch to the scratch buffer"
+;;            (lambda (&rest _) (create-scratch-buffer))
+;;            'default)
+;;           (nil
+;;            "Open init.el"
+;;            "Open init.el for fast configuration"
+;;            (lambda (&rest _) (find-file "~/.emacs.d/init.el"))
+;;            'default)))))
 ;; With Emacs as daemon mode, when running `emacsclient`, open *dashboard* instead of *scratch*.
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
@@ -304,3 +414,73 @@
 ;; may prefer `web-mode'.
 (use-package php-mode
   :ensure t)
+
+;; Some custom options
+(setq
+ auto-save-default nil
+ scroll-step 1
+ sentence-end-double-space nil
+ backup-directory-alist `(("." . "~/.saves"))
+ inhibit-startup-echo-area-message "I'm confused again"
+ )
+
+;;(setq-default inhibit-splash-screen
+;;	      tab-width 4
+;;	      indent-tabs-mode nil)
+
+;;; IRC stuff
+;; Set nickname & real-name as constant variables
+(setq
+ erc-nick "HenriqMarq"     ; Our IRC nick
+ erc-user-full-name "Henrique Marques") ; Our /whois name
+
+;; Connect to server
+(defun some-serv ()
+  (interactive)
+  (erc :server "colonq.computer"
+       :port   "26697"))
+
+;;; Some other tweaks
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* (* 1024 1024) 3)) ;; 3mb
+(run-with-idle-timer 2 t (lambda () (garbage-collect)))
+(setq lsp-log-io nil) ; if set to true can cause a performance hit
+(setq lsp-idle-delay 1)
+(setq lsp-auto-guess-root t)
+(setq lsp-log-io nil)
+(setq lsp-restart 'auto-restart)
+(setq lsp-enable-symbol-highlighting nil)
+(setq lsp-enable-on-type-formatting nil)
+(setq lsp-signature-auto-activate nil)
+(setq lsp-signature-render-documentation nil)
+(setq lsp-eldoc-hook nil)
+(setq lsp-modeline-code-actions-enable nil)
+(setq lsp-modeline-diagnostics-enable nil)
+(setq lsp-headerline-breadcrumb-enable nil)
+(setq lsp-semantic-tokens-enable nil)
+(setq lsp-enable-folding nil)
+(setq lsp-enable-imenu nil)
+(setq lsp-enable-snippet nil)
+(setq read-process-output-max (* (* 1024 1024) 3)) ;; 3MB
+(setq lsp-idle-delay 0.5)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (expt 2 23))))
+
+(use-package i3bar
+  :ensure t
+  :config
+  (i3bar-mode 1))
+
+(use-package tab-bar
+  :custom
+  (tab-bar-format '(;tab-bar-format-tabs        ; Optional: Remove to _only_ display the bar.
+                    tab-bar-format-align-right ; Optional: Remove to align left.
+                    tab-bar-format-global))
+  :config
+  (tab-bar-mode 1))
+
+(provide 'init)
+;;; init.el ends here
+(put 'dired-find-alternate-file 'disabled nil)

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: vtemp
+# key: ~vtemp
+# --
+<template>
+</template>
+
+<script lang="$1">
+export default {
+  name: '$0',
+
+  props: {},
+}
+</script>
+
+<style>
+</style>
