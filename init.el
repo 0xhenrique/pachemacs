@@ -36,12 +36,14 @@
 (setq display-time-default-load-average nil)
 
 ;;; EXWM Setup
+;; (unless (package-installed-p 'exwm-randr)
+  ;; (package-install 'exwm-randr))
 (require 'exwm-randr)
 ;; (require 'exwm-systemtray)
-(exwm-randr-mode t)
+;; (exwm-randr-mode t)
 (start-process-shell-command
  "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
-(exwm-systemtray-mode t)
+;; (exwm-systemtray-mode t)
 
 ;; (setq exwm-manage-configurations
 ;;       '(((string-equal exwm-class-name "Dialog")
@@ -72,14 +74,14 @@
 ;; (start-process-shell-command
 ;;  "polybar" nil "polybar")
 
-(defun set-wallpaper()
-  (interactive)
-  (start-process-shell-command "feh" nil "feh --bg-scale ~/Pictures/papes/gun-waifu.png"))
+;; (defun set-wallpaper()
+;;   (interactive)
+;;   (start-process-shell-command "feh" nil "feh --bg-scale ~/Pictures/papes/gun-waifu.png"))
 
 ;; (set-frame-parameter (selected-frame) 'alpha '(93 . 93))
 ;; (add-to-list 'default-frame-alist 'alpha '(93 . 93))
 
-(ido-mode 1)
+(ido-mode t)
 (display-time-mode t)
 (unless (package-installed-p 'exwm)
   (package-install 'exwm))
@@ -148,7 +150,7 @@
         ;; search
         ([?\C-s] . [?\C-f])))
 (setq exwm-workspace-minibuffer-position 'bottom)
-(set-wallpaper)
+;; (set-wallpaper)
 (exwm-enable)
 
 ;; Desktop keys
