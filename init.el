@@ -21,17 +21,153 @@
   :if (display-graphic-p))
 
 ;; Load a custom theme
-(load-theme 'modus-vivendi t)
+(load-theme 'gruvbox-dark-hard t)
 
 ;; Set default font face
 (set-face-attribute 'default nil :font "Iosevka Comfy")
 
 ;; Some basic visual tweak
+(fringe-mode 1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (when window-system (add-hook 'prog-mode-hook 'hl-line-mode))
 (setq scroll-conservatively 100)
+(setq display-time-default-load-average nil)
+
+;;; EXWM Setup
+(require 'exwm-randr)
+;; (require 'exwm-systemtray)
+(exwm-randr-mode t)
+(start-process-shell-command
+ "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
+(exwm-systemtray-mode t)
+
+;; (setq exwm-manage-configurations
+;;       '(((string-equal exwm-class-name "Dialog")
+;;          floating t)
+;;         ((string-equal exwm-instance-name "Firefox: Save Image")
+;;          floating t)))
+
+(defun efs/exwm-update-title ()
+  (pcase exwm-class-name
+    ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))
+    ("librewolf" (exwm-workspace-rename-buffer (format "Librewolf: %s" exwm-title)))
+    ("Transmission-gtk" (exwm-workspace-rename-buffer (format "Transmission: %s" exwm-title)))))
+  ;; When window title updates, use it to set the buffer name
+  (add-hook 'exwm-update-title-hook #'efs/exwm-update-title)
+
+(defvar polybar-process nil)
+(defun kill-polybar ()
+  (interactive)
+  (when polybar-process
+    (ignore-errors
+      (kill-process polybar-process)))
+  (setq polybar-process nil))
+(defun start-polybar ()
+  (interactive)
+  (kill-polybar)
+  (setq polybar-process (start-process-shell-command "polybar" nil "polybar")))
+
+;; (start-process-shell-command
+;;  "polybar" nil "polybar")
+
+(defun set-wallpaper()
+  (interactive)
+  (start-process-shell-command "feh" nil "feh --bg-scale ~/Pictures/papes/gun-waifu.png"))
+
+;; (set-frame-parameter (selected-frame) 'alpha '(93 . 93))
+;; (add-to-list 'default-frame-alist 'alpha '(93 . 93))
+
+(ido-mode 1)
+(display-time-mode t)
+(unless (package-installed-p 'exwm)
+  (package-install 'exwm))
+(setq exwm-workspace-number 4)
+
+(add-hook 'exwm-update-class-hook
+          (lambda ()
+            (unless (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
+                        (string= "gimp" exwm-instance-name))
+              (exwm-workspace-rename-buffer exwm-class-name))))
+
+(add-hook 'exwm-update-title-hook
+          (lambda ()
+            (when (or (not exwm-instance-name)
+                      (string-prefix-p "sun-awt-X11-" exwm-instance-name)
+                      (string= "gimp" exwm-instance-name))
+              (exwm-workspace-rename-buffer exwm-title))))
+
+(setq exwm-input-global-keys
+      `(
+        ;; Bind "s-r" to exit char-mode and fullscreen mode.
+        ([?\s-r] . exwm-reset)
+        ;; Bind "s-w" to switch workspace interactively.
+        ([?\s-w] . exwm-workspace-switch)
+	;; Move between windows
+	([s-left] . windmove-left)
+	([s-right] . windmove-right)
+	([s-up] . windmove-up)
+	([s-down] . windmove-down)
+        ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
+        ,@(mapcar (lambda (i)
+                    `(,(kbd (format "s-%d" i)) .
+                      (lambda ()
+                        (interactive)
+                        (exwm-workspace-switch-create ,i))))
+                  (number-sequence 0 9))
+        ;; Bind "s-&" to launch applications ('M-&' also works if the output
+        ;; buffer does not bother you).
+        ([?\s-&] . (lambda (command)
+		     (interactive (list (read-shell-command "$ ")))
+		     (start-process-shell-command command nil command)))
+        ;; Bind "s-<f2>" to "slock", a simple X display locker.
+        ([s-f2] . (lambda ()
+		    (interactive)
+		    (start-process "" nil "/usr/bin/slock")))))
+
+(setq exwm-input-simulation-keys
+      '(
+        ;; movement
+        ([?\C-b] . [left])
+        ([?\M-b] . [C-left])
+        ([?\C-f] . [right])
+        ([?\M-f] . [C-right])
+        ([?\C-p] . [up])
+        ([?\C-n] . [down])
+        ([?\C-a] . [home])
+        ([?\C-e] . [end])
+        ([?\M-v] . [prior])
+        ([?\C-v] . [next])
+        ([?\C-d] . [delete])
+        ([?\C-k] . [S-end delete])
+        ;; cut/paste.
+        ([?\C-w] . [?\C-x])
+        ([?\M-w] . [?\C-c])
+        ([?\C-y] . [?\C-v])
+        ;; search
+        ([?\C-s] . [?\C-f])))
+(setq exwm-workspace-minibuffer-position 'bottom)
+(set-wallpaper)
+(exwm-enable)
+
+;; Desktop keys
+(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
+                    (lambda () (interactive)
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
+(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
+                    (lambda () (interactive)
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
+
+;; (exwm-input-set-key (kbd "s-<right>") 'windmove-right)
+;; (exwm-input-set-key (kbd "s-<left>") 'windmove-left)
+;; (exwm-input-set-key (kbd "s-<down>") 'windmove-down)
+;; (exwm-input-set-key (kbd "s-<up>") 'windmove-up)
+;; (exwm-input-set-key (kbd "S-s-SPC") 'exwm-floating-toggle-floating)
+
+;;; Emacs evil
+(unless (package-installed-p 'evil)
+  (package-install 'evil))
 
 ;;; Completion framework
 (unless (package-installed-p 'vertico)
@@ -205,8 +341,6 @@
 (unless (package-installed-p 'yasnippet)
   (package-install 'yasnippet))
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-;;(define-key yas-minor-mode-map [(tab)] nil)
-;;(define-key yas-minor-mode-map (kbd "TAB") nil)
 (use-package yasnippet
   :ensure
   :bind
@@ -219,27 +353,29 @@
   (add-hook 'prog-mode-hook 'yas-minor-mode))
 (yas-global-mode 1)
 
-
+(unless (package-installed-p 'consult)
+  (package-install 'consult))
 
 (unless (package-installed-p 'move-text)
   (package-install 'move-text))
 (global-set-key (kbd "M-p") 'move-text-up)
 (global-set-key (kbd "M-n") 'move-text-down)
 
+;;; Setting some custom keybinds
+;; Define `SPC` as a prefix key in normal mode
+(require 'evil)
+(evil-mode 1)
+(define-prefix-command 'my-evil-space-map)
+(define-key evil-normal-state-map (kbd "SPC") 'my-evil-space-map)
+;; Bind your commands to sequences starting with `SPC` in normal mode
+(define-key evil-normal-state-map (kbd "SPC s w") #'consult-ripgrep)
+(define-key evil-normal-state-map (kbd "SPC s f") #'project-find-file)
+(define-key evil-normal-state-map (kbd "SPC g s") #'magit-status)
+
 ;;; Multiple cursors
 (unless (package-installed-p 'evil-mc)
   (package-install 'evil-mc))
 (global-evil-mc-mode 1)
-;;(unless (package-installed-p 'evil-multiedit)
-;;  (package-install 'evil-multiedit))
-
-;; (unless (package-installed-p 'multiple-cursors)
-;;   (package-install 'multiple-cursors))
-;; (multiple-cursors-mode t)
-;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;;; Outline-based notes management and organizer
 
