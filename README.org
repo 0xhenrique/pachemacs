@@ -1,5 +1,87 @@
-#+TITLE: Personal Emacs config
+#+TITLE: Pachemacs
 #+LANGUAGE: en
 
-
 [[./screenshot.png]]
+
+* Table of Contents                                                     :TOC:
+- [[#why][Why]]
+- [[#dependencies][Dependencies]]
+- [[#installing][Installing]]
+- [[#how-to-remove-unwanted-things][How to remove unwanted things]]
+- [[#how-to-create-new-modules][How to create new modules]]
+- [[#how-to-customise-the-dashboard][How to customise the dashboard]]
+
+* Why? :TOC:
+Why not?
+
+* Dependencies :TOC:
+
+* Installing :TOC:
+Backup or delete your current .emacs.d directory and clone this repo:
+#+BEGIN_SRC
+  git clone --depth=1 https://github.com/henrique-marques-vsoft/emacs.d.git ~/.emacs.d
+#+END_SRC
+Simple as that. But if you're not using EXWM I recommend that you read further.
+
+* How to remove unwanted things :TOC:
+There's a file called =init.el= where you can simply comment or delete some of the lisp/modules.
+
+#+BEGIN_SRC emacs-lisp
+;; If you're not an EXWM enjoyer, you can remove or comment the line below
+(require 'pache-ui)
+(require 'pache-exwm)
+;; If you're not an Evil enjoyer, you might also want to remove pache-evil below
+(require 'pache-evil)
+(require 'pache-misc)
+(require 'pache-yas)
+(require 'pache-programming)
+(require 'pache-irc)
+#+END_SRC
+
+Beware that some of those modules are required to run Pachemacs.
+Be careful when removing it.
+There is a github issue to track this problem. You can check it [[https://github.com/henrique-marques-vsoft/emacs.d/issues/2][here]].
+
+* How to create new modules :TOC:
+Create a new file:
+#+BEGIN_SRC bash
+  touch ~/.emacs.d/lisp/pache-module.el
+#+END_SRC
+
+Add the following boilerplate to the newly created module:
+#+BEGIN_SRC emacs-lisp
+  ;;; pache-module.el --- Custom Module Settings -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;;; Code:
+
+
+  (provide 'pache-module)
+  ;;; pache-module.el ends here
+#+END_SRC
+
+And call it in the =init.el= file like this:
+#+BEGIN_SRC emacs-lisp
+(require 'pache-module)
+#+END_SRC
+
+* How to customise the Dashboard :TOC:
+The settings for the Dashboard can be found at =~/.emacs.d/lisp/pache-ui.el=.
+Search for the following block: 
+#+BEGIN_SRC emacs-lisp
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner "~/.emacs.d/img/pache-5.png"
+	dashboard-banner-logo-title "P A C H E M A C S"
+	dashboard-footer-messages '("\"The shrine isn't a good place for using magic.\"")
+	dashboard-center-content t
+	dashboard-vertically-center-content t
+	dashboard-items '((recents . 8)
+			  (bookmarks . 5)
+			  (projects . 3)
+			  (agenda . 3))))
+#+END_SRC
+
+#+ATTR_ORG: :align center
+[[./img/pache-1.png]]

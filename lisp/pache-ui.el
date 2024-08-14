@@ -34,18 +34,8 @@
 	dashboard-items '((recents . 8)
 			  (bookmarks . 5)
 			  (projects . 3)
-			  (agenda . 3))
-	))
-
-  ;; (setq dashboard-startup-banner "~/.emacs.d/img/pache-5.png")
-  ;; (setq dashboard-banner-logo-title "P A C H E M A C S")
-  ;; (setq dashboard-footer-messages '("\"The shrine isn't a good place for using magic.\""))
-  ;; (setq dashboard-center-content t)
-  ;; (setq dashboard-vertically-center-content t)
-  ;; (setq dashboard-items '((recents . 8)
-  ;; 			  (bookmarks . 5)
-  ;; 			  (projects . 3)
-  ;; 			  (agenda . 3))))
+			  (agenda . 3))))
+	
 
 ;; Some other visual tweaks
 (fringe-mode 1)
