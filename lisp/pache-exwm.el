@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 (require 'exwm-randr)
-;; This is needed because I hate using two monitors
+;; This is needed because I prefer to only use the main monitor
 (start-process-shell-command
  "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
 

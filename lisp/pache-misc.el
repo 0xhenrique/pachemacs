@@ -6,6 +6,8 @@
 (unless (package-installed-p 'vertico)
   (package-install 'vertico))
 
+(ido-mode t)
+
 ;; Enable completion by narrowing
 (use-package vertico
   :ensure t
@@ -71,12 +73,19 @@
 (unless (package-installed-p 'eat)
   (package-install 'eat))
 
+;; Vterm
+(unless (package-installed-p 'vterm)
+  (package-install 'vterm))
+(unless (package-installed-p 'multi-vterm)
+  (package-install 'multi-vterm))
+
 ;; Close the terminal buffer when the shell terminates.
 (setq eat-kill-buffer-on-exit t)
 
-;; Enable mouse-support.
+;; Enable mouse-support
 (setq eat-enable-mouse t)
 
+;; Which-key displays available keybindings in popup
 (unless (package-installed-p 'which-key)
   (package-install 'which-key))
 (which-key-mode)
