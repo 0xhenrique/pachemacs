@@ -45,7 +45,6 @@
 ;; 			  (bookmarks . 5)
 ;; 			  (projects . 3)
 ;; 			  (agenda . 3))))
-	
 
 ;; Some other visual tweaks
 (fringe-mode 1)
@@ -54,6 +53,7 @@
 (scroll-bar-mode -1)
 (when window-system (add-hook 'prog-mode-hook 'hl-line-mode))
 (setq scroll-conservatively 100
+      resize-mini-windows 'grow-only
       display-time-default-load-average nil)
 
 (provide 'pache-ui)

@@ -16,10 +16,10 @@
 
 ;; When window title updates, use it to set the buffer name
 (add-hook 'exwm-update-title-hook #'efs/exwm-update-title)
-(add-hook 'exwm-init-hook (lambda () (dashboard-refresh-buffer)))
-(add-hook 'after-init-hook
-	  (lambda ()
-	    (switch-to-buffer "*dashboard*")))
+;; (add-hook 'exwm-init-hook (lambda () (dashboard-refresh-buffer)))
+;; (add-hook 'after-init-hook
+;; 	  (lambda ()
+;; 	    (switch-to-buffer "*dashboard*")))
 
 ;;  If you want to set a wallpaper, uncomment the following function and set a correct path to feh
 ; (defun set-wallpaper()
@@ -97,14 +97,21 @@
         ([?\C-y] . [?\C-v])
         ;; search
         ([?\C-s] . [?\C-f])))
-(setq exwm-workspace-minibuffer-position 'bottom)
+(setq exwm-workspace-minibuffer-position 'top)
 ;; (set-wallpaper)
 (exwm-enable)
 
-(use-package i3bar
-  :ensure t
-  :config
-  (i3bar-mode 1))
+;; (use-package tab-bar
+;;   :custom
+;;   (tab-bar-format '(tab-bar-format-align-right ; Optional: Remove to align left.
+;;                     tab-bar-format-global))
+;;   :config
+;;   (tab-bar-mode 1))
+
+;; (use-package i3bar
+;;   :ensure t
+;;   :config
+;;   (i3bar-mode 1))
 
 (provide 'pache-exwm)
 ;;; pache-exwm.el ends here

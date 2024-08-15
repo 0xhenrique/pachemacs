@@ -52,6 +52,7 @@
 (setq gc-cons-threshold 100000000
       read-process-output-max (* (* 1024 1024) 3)
       run-with-idle-timer 2 t (lambda () (garbage-collect))
+      inhibit-compacting-font-caches t
       lsp-log-io nil
       lsp-idle-delay 1
       lsp-auto-guess-root t
