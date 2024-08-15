@@ -12,6 +12,7 @@
 ;; If you're not an EXWM enjoyer, you can remove or comment the line below
 (require 'pache-ui)
 (require 'pache-exwm)
+(require 'pache-keys)
 ;; If you're not an Evil enjoyer, you might also want to remove pache-evil below
 (require 'pache-evil)
 (require 'pache-misc)
@@ -75,7 +76,7 @@
           (lambda ()
             (setq gc-cons-threshold (expt 2 23))))
 
-(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+;; (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
 (provide 'init)
 ;;; init.el ends here

@@ -101,14 +101,6 @@
 ;; (set-wallpaper)
 (exwm-enable)
 
-;; Desktop keys
-(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
-                    (lambda () (interactive)
-                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
-(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
-                    (lambda () (interactive)
-                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
-
 (use-package i3bar
   :ensure t
   :config

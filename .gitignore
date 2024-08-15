@@ -46,3 +46,27 @@ flycheck_*.el
 
 # network security
 /network-security.data
+
+# custom
+custom.el
+
+# cache
+/eln-cache/
+
+# history
+history
+
+#ido
+ido.last
+
+#multi session
+/multisession/
+
+# places
+places
+
+#recentf
+recentf
+
+# Transient
+/transient/

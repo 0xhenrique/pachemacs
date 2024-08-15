@@ -46,6 +46,14 @@
 ;; Enable autocompletion by default in programming buffers
 (add-hook 'prog-mode-hook #'corfu-mode)
 
+;;; Install Helm
+(unless (package-installed-p 'helm)
+  (package-install 'helm))
+
+;(global-set-key (kbd "M-x") #'helm-M-x)
+;(global-set-key (kbd "C-x C-f") #'helm-mini)
+;(helm-mode 1)
+
 ;;; Git client
 (unless (package-installed-p 'magit)
   (package-install 'magit))
