@@ -8,8 +8,19 @@
 (unless (package-installed-p 'catppuccin-theme)
   (package-install 'catppuccin-theme))
 
+;; Mode line settings
+(display-battery-mode 1)
+(setq display-time-day-and-date t)
+(display-time-mode 1)
+
+;; Set frame transparency
+(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;; Set the default theme
-(load-theme 'gruvbox-dark-hard t)
+(load-theme 'catppuccin t)
 
 ;; Some icons for Emacs
 (unless (package-installed-p 'nerd-icons)
@@ -18,15 +29,15 @@
   :if (display-graphic-p))
 
 ;; Install Doom Modeline
-(unless (package-installed-p 'doom-modeline)
-  (package-install 'doom-modeline))
+;;(unless (package-installed-p 'doom-modeline)
+  ;;(package-install 'doom-modeline))
 
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+;;(use-package doom-modeline
+;;  :ensure t
+;;  :init (doom-modeline-mode 1))
 
 ;; Set default font face
-(set-face-attribute 'default nil :font "Iosevka Comfy")
+;(set-face-attribute 'default nil :font "Iosevka")
 
 ;; Dashboard settings
 ;; (unless (package-installed-p 'dashboard)

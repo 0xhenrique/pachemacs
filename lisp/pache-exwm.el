@@ -7,11 +7,20 @@
 (start-process-shell-command
  "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
 
+;; Set wallpaper
+(start-process-shell-command
+ "feh" nil "feh --bg-scale ~/Pictures/papes/patchy/3.jpg")
+
+;; Start picom
+(start-process-shell-command
+ "picom" nil "picom")
+
 (defun efs/exwm-update-title ()
   (pcase exwm-class-name
     ;; This is used to avoid the buffers being named like "firefox<3>", so we use that window's title as buffer name
     ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))
     ("librewolf" (exwm-workspace-rename-buffer (format "Librewolf: %s" exwm-title)))
+    ("multi-vterm" (exwm-workspace-rename-buffer (format "Vterm: %s" exwm-title)))
     ("Transmission-gtk" (exwm-workspace-rename-buffer (format "Transmission: %s" exwm-title)))))
 
 ;; When window title updates, use it to set the buffer name
@@ -68,7 +77,7 @@
                   (number-sequence 0 9))
         ;; Bind "s-&" to launch applications ('M-&' also works if the output
         ;; buffer does not bother you).
-        ([?\s-&] . (lambda (command)
+        ([?\s-d] . (lambda (command)
 		     (interactive (list (read-shell-command "$ ")))
 		     (start-process-shell-command command nil command)))
         ;; Bind "s-<f2>" to "slock", a simple X display locker.
@@ -97,7 +106,7 @@
         ([?\C-y] . [?\C-v])
         ;; search
         ([?\C-s] . [?\C-f])))
-(setq exwm-workspace-minibuffer-position 'top)
+;; (setq exwm-workspace-minibuffer-position 'top)
 ;; (set-wallpaper)
 (exwm-enable)
 

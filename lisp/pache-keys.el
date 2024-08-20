@@ -26,7 +26,7 @@
 (exwm-input-set-key (kbd "s-q") (kill-this-buffer))
 (exwm-input-set-key (kbd "s-f") 'firefox-search-term)
 (exwm-input-set-key (kbd "s-l") 'librewolf-search-term)
-(exwm-input-set-key (kbd "s-b") 'ivy-switch-buffer)
+(exwm-input-set-key (kbd "s-SPC") 'ivy-switch-buffer)
 (exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
 
 (provide 'pache-keys)

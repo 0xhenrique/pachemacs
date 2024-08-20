@@ -9,12 +9,13 @@
 
 (require 'evil)
 (evil-mode 1)
-(define-prefix-command 'my-evil-space-map)
-(define-key evil-normal-state-map (kbd "SPC") 'my-evil-space-map)
+;; (define-prefix-command 'my-evil-space-map)
+;; (define-key evil-normal-state-map (kbd "SPC") 'my-evil-space-map)
+
 ;; Bind your commands to sequences starting with `SPC` in normal mode
-(define-key evil-normal-state-map (kbd "SPC s w") #'consult-ripgrep)
-(define-key evil-normal-state-map (kbd "SPC s f") #'project-find-file)
-(define-key evil-normal-state-map (kbd "SPC g s") #'magit-status)
+;; (define-key evil-normal-state-map (kbd "SPC s w") #'consult-ripgrep)
+;; (define-key evil-normal-state-map (kbd "SPC s f") #'project-find-file)
+;; (define-key evil-normal-state-map (kbd "SPC g s") #'magit-status)
 
 ;;; Multiple cursors
 (unless (package-installed-p 'evil-mc)
