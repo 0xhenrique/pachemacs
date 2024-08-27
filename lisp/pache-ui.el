@@ -20,7 +20,7 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Set the default theme
-(load-theme 'catppuccin t)
+(load-theme 'gruvbox-dark-hard t)
 
 ;; Some icons for Emacs
 (unless (package-installed-p 'nerd-icons)
@@ -29,15 +29,15 @@
   :if (display-graphic-p))
 
 ;; Install Doom Modeline
-;;(unless (package-installed-p 'doom-modeline)
-  ;;(package-install 'doom-modeline))
+(unless (package-installed-p 'doom-modeline)
+  (package-install 'doom-modeline))
 
-;;(use-package doom-modeline
-;;  :ensure t
-;;  :init (doom-modeline-mode 1))
+(use-package doom-modeline
+ :ensure t
+ :init (doom-modeline-mode 1))
 
 ;; Set default font face
-;(set-face-attribute 'default nil :font "Iosevka")
+; (set-face-attribute 'default nil :font "Iosevka")
 
 ;; Dashboard settings
 ;; (unless (package-installed-p 'dashboard)

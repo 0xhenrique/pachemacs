@@ -1,0 +1,4 @@
+;;; -*- lisp-data -*-
+(("~/workspace/task-planner-dashboard/")
+ ("~/workspace/dump/app/")
+ ("~/.emacs.d/"))
