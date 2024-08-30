@@ -85,7 +85,7 @@
  '(custom-safe-themes
    '("a060c0315a44bee19ac87414571131c8c8fad7a940bda0102da67410e66833aa" "d445c7b530713eac282ecdeea07a8fa59692c83045bf84dd112dd738c7bcad1d" default))
  '(package-selected-packages
-   '(nix-mode counsel swiper exwm yasnippet yaml-mode which-key web-mode vue-mode vertico typescript-mode sudo-edit solarized-theme sly rust-mode php-mode nvm nerd-icons multi-vterm move-text magit lua-mode lsp-mode lemon json-mode ivy gruvbox-theme go-mode flycheck evil-mc emms editorconfig eat diff-hl corfu consult catppuccin-theme all-the-icons)))
+   '(geiser-guile geiser nix-mode counsel swiper exwm yasnippet yaml-mode which-key web-mode vue-mode vertico typescript-mode sudo-edit solarized-theme sly rust-mode php-mode nvm nerd-icons multi-vterm move-text magit lua-mode lsp-mode lemon json-mode ivy gruvbox-theme go-mode flycheck evil-mc emms editorconfig eat diff-hl corfu consult catppuccin-theme all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

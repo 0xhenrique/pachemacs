@@ -145,5 +145,18 @@
   :config
   (tab-bar-mode 1))
 
+;;; Org settings
+;; Install Geiser to work with Scheme in Org files
+(unless (package-installed-p 'geiser)
+  (package-install 'geiser))
+;; Geiser-guile for Scheme
+(unless (package-installed-p 'geiser-guile)
+  (package-install 'geiser-guile))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (scheme . t)))
+
 (provide 'pache-misc)
 ;;; pache-misc.el ends here

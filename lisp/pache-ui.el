@@ -20,7 +20,7 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Set the default theme
-(load-theme 'gruvbox-dark-hard t)
+(load-theme 'catppuccin t)
 
 ;; Some icons for Emacs
 (unless (package-installed-p 'nerd-icons)
