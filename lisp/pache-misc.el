@@ -12,6 +12,10 @@
 (unless (package-installed-p 'sudo-edit)
   (package-install 'sudo-edit))
 
+;; Auto update files and dired
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
+
 ;;; Emacs with super powers
 (global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -37,6 +41,10 @@
 (global-set-key (kbd "C-c J") 'counsel-file-jump)
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (global-set-key (kbd "C-c w") 'counsel-wmctrl)
+
+(unless (package-installed-p 'rainbow-delimiters)
+  (package-install 'rainbow-delimiters))
+(rainbow-delimiters-mode 1)
 
 (unless (package-installed-p 'counsel)
   (package-install 'counsel))
@@ -110,8 +118,25 @@
 (unless (package-installed-p 'editorconfig)
   (package-install 'editorconfig))
 
+;; Customise dired
+(setq dired-guess-shell-alist-user '(("\\.pdf\\'" "librewolf")
+				     ("\\.flac\\'" "mpv")
+				     ("\\.mp3\\'" "mpv")
+				     ("\\.mp4\\'" "mpv")
+				     ("\\.webm\\'" "mpv")
+				     ("\\.jpg\\'" "feh")
+				     ("\\.png\\'" "feh")
+				     ("\\.webp\\'" "feh")))
+
 ;; Enable EditorConfig
 (editorconfig-mode t)
+
+;;; Create a new shell with a new name
+(defun create-shell ()
+    "Creates a shell with a given name"
+    (interactive);; "Prompt\n shell name:")
+    (let ((shell-name (read-string "shell name: " nil)))
+    (shell (concat "*" shell-name "*"))))
 
 ;;; In-Emacs Terminal Emulation
 (unless (package-installed-p 'eat)

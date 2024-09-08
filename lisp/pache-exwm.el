@@ -7,6 +7,10 @@
 (start-process-shell-command
  "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
 
+;; Set keyboard layout switch (US and ABNT2)
+(start-process-shell-command
+ "setxkbmap" nil "-layout 'us,br' -option 'grp:alt_shift_toggle'")
+
 ;; Set wallpaper
 (start-process-shell-command
  "feh" nil "feh --bg-scale ~/Pictures/papes/patchy/3.jpg")
@@ -17,9 +21,8 @@
 
 (defun efs/exwm-update-title ()
   (pcase exwm-class-name
-    ;; This is used to avoid the buffers being named like "firefox<3>", so we use that window's title as buffer name
-    ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))
-    ("librewolf" (exwm-workspace-rename-buffer (format "Librewolf: %s" exwm-title)))
+    ;; This is used to avoid the buffers being named like "librewolf<3>", so we use that window's title as buffer name
+    ("LibreWolf" (exwm-workspace-rename-buffer (format "Librewolf: %s" exwm-title)))
     ("multi-vterm" (exwm-workspace-rename-buffer (format "Vterm: %s" exwm-title)))
     ("Transmission-gtk" (exwm-workspace-rename-buffer (format "Transmission: %s" exwm-title)))))
 
