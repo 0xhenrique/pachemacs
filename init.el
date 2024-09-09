@@ -10,11 +10,11 @@
 ;; Common modules for Pachemacs
 ;; (add-to-list 'load-path "/home/arisu/.emacs.d/lisp/")
 ;; If you're not an EXWM enjoyer, you can remove or comment the line below
-;; (load "~/.emacs.d/lisp/pache-exwm.el")
+(load "~/.emacs.d/lisp/pache-exwm.el")
 (load "~/.emacs.d/lisp/pache-ui.el")
 ;; If you're not an Evil enjoyer, you might also want to remove pache-evil below
 (load "~/.emacs.d/lisp/pache-evil.el")
-;;(load "~/.emacs.d/lisp/pache-keys.el")
+(load "~/.emacs.d/lisp/pache-keys.el")
 (load "~/.emacs.d/lisp/pache-misc.el")
 (load "~/.emacs.d/lisp/pache-yas.el")
 (load "~/.emacs.d/lisp/pache-programming.el")
@@ -41,7 +41,7 @@
 (recentf-mode t)
 (defalias 'yes-or-no #'y-or-n-p)
 (global-display-line-numbers-mode t)
-(setq visible-bell 1)
+;; (setq visible-bell 1)
 
 ;;; Make Emacs run faster
 (setq gc-cons-threshold 100000000
@@ -85,7 +85,7 @@
  '(custom-safe-themes
    '("a060c0315a44bee19ac87414571131c8c8fad7a940bda0102da67410e66833aa" "d445c7b530713eac282ecdeea07a8fa59692c83045bf84dd112dd738c7bcad1d" default))
  '(package-selected-packages
-   '(geiser-guile geiser nix-mode counsel swiper exwm yasnippet yaml-mode which-key web-mode vue-mode vertico typescript-mode sudo-edit solarized-theme sly rust-mode php-mode nvm nerd-icons multi-vterm move-text magit lua-mode lsp-mode lemon json-mode ivy gruvbox-theme go-mode flycheck evil-mc emms editorconfig eat diff-hl corfu consult catppuccin-theme all-the-icons)))
+   '(helm openwith geiser-guile geiser nix-mode counsel swiper exwm yasnippet yaml-mode which-key web-mode vue-mode vertico typescript-mode sudo-edit solarized-theme sly rust-mode php-mode nvm nerd-icons multi-vterm move-text magit lua-mode lsp-mode lemon json-mode ivy gruvbox-theme go-mode flycheck evil-mc emms editorconfig eat diff-hl corfu consult catppuccin-theme all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

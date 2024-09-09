@@ -17,30 +17,36 @@
 (setq global-auto-revert-non-file-buffers t)
 
 ;;; Emacs with super powers
-(global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(unless (package-installed-p 'ivy)
+  (package-install 'ivy))
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+
+;; (global-set-key (kbd "C-s") 'swiper-isearch)
+;; (global-set-key (kbd "M-x") 'counsel-M-x)
+;; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
-(global-set-key (kbd "<f1> f") 'counsel-describe-function)
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> l") 'counsel-find-library)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-(global-set-key (kbd "<f2> j") 'counsel-set-variable)
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-(global-set-key (kbd "C-c v") 'ivy-push-view)
-(global-set-key (kbd "C-c V") 'ivy-pop-view)
-(global-set-key (kbd "C-c c") 'counsel-compile)
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-(global-set-key (kbd "C-c L") 'counsel-git-log)
-(global-set-key (kbd "C-c k") 'counsel-rg)
-(global-set-key (kbd "C-c m") 'counsel-linux-app)
-(global-set-key (kbd "C-c n") 'counsel-fzf)
-(global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-c J") 'counsel-file-jump)
-(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-(global-set-key (kbd "C-c w") 'counsel-wmctrl)
+;; (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+;; (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+;; (global-set-key (kbd "<f1> l") 'counsel-find-library)
+;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+;; (global-set-key (kbd "<f2> j") 'counsel-set-variable)
+;; (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+;; (global-set-key (kbd "C-c v") 'ivy-push-view)
+;; (global-set-key (kbd "C-c V") 'ivy-pop-view)
+;; (global-set-key (kbd "C-c c") 'counsel-compile)
+;; (global-set-key (kbd "C-c g") 'counsel-git)
+;; (global-set-key (kbd "C-c j") 'counsel-git-grep)
+;; (global-set-key (kbd "C-c L") 'counsel-git-log)
+;; (global-set-key (kbd "C-c k") 'counsel-rg)
+;; (global-set-key (kbd "C-c m") 'counsel-linux-app)
+;; (global-set-key (kbd "C-c n") 'counsel-fzf)
+;; (global-set-key (kbd "C-x l") 'counsel-locate)
+;; (global-set-key (kbd "C-c J") 'counsel-file-jump)
+;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+;; (global-set-key (kbd "C-c w") 'counsel-wmctrl)
 
 (unless (package-installed-p 'rainbow-delimiters)
   (package-install 'rainbow-delimiters))
@@ -50,11 +56,6 @@
   (package-install 'counsel))
 (counsel-mode 1)
 
-(unless (package-installed-p 'ivy)
-  (package-install 'ivy))
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq ivy-count-format "(%d/%d) ")
 (global-set-key (kbd "C-c k") 'counsel-rg)
 (global-set-key (kbd "C-d") 'counsel-rg)
 
@@ -119,6 +120,35 @@
   (package-install 'editorconfig))
 
 ;; Customise dired
+(unless (package-installed-p 'openwith)
+  (package-install 'openwith))
+(when (require 'openwith nil 'noerror)
+  (setq openwith-associations
+	(list
+	 (list (openwith-make-extension-regexp
+		'("mpg" "mpeg" "mp3" "mp4"
+		  "avi" "wmv" "wav" "mov" "flv"
+		  "ogm" "ogg" "mkv"))
+	       "mpv"
+	       '(file))
+	 (list (openwith-make-extension-regexp
+		'("xbm" "pbm" "pgm" "ppm" "pnm"
+		  "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+	       "feh"
+	       '(file))
+	 (list (openwith-make-extension-regexp
+		'("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
+	       "libreoffice"
+	       '(file))
+	 '("\\.lyx" "lyx" (file))
+	 '("\\.chm" "kchmviewer" (file))
+	 (list (openwith-make-extension-regexp
+		'("pdf" "ps" "ps.gz" "dvi"))
+	       "librewolf"
+	       '(file))
+	 ))
+  (openwith-mode 1))
+
 (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "librewolf")
 				     ("\\.flac\\'" "mpv")
 				     ("\\.mp3\\'" "mpv")
@@ -182,6 +212,18 @@
  'org-babel-load-languages
  '((emacs-lisp . t)
    (scheme . t)))
+
+;; Helm
+(unless (package-installed-p 'helm)
+  (package-install 'helm))
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x p f") 'project-find-file)
+(global-set-key (kbd "C-x p w") 'helm-do-grep-ag)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x /") 'helm-occur)
+(global-set-key (kbd "s-d") 'helm-run-external-command)
 
 (provide 'pache-misc)
 ;;; pache-misc.el ends here

@@ -9,7 +9,7 @@
 
 ;; Set keyboard layout switch (US and ABNT2)
 (start-process-shell-command
- "setxkbmap" nil "-layout 'us,br' -option 'grp:alt_shift_toggle'")
+ "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
 
 ;; Set wallpaper
 (start-process-shell-command

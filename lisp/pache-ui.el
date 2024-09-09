@@ -23,6 +23,8 @@
 (load-theme 'catppuccin t)
 
 ;; Some icons for Emacs
+(unless (package-installed-p 'all-the-icons)
+  (package-install 'all-the-icons))
 (unless (package-installed-p 'nerd-icons)
   (package-install 'nerd-icons))
 (use-package all-the-icons
