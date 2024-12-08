@@ -38,32 +38,16 @@
  :ensure t
  :init (doom-modeline-mode 1))
 
-;; Set default font face
-; (set-face-attribute 'default nil :font "Iosevka")
-
-;; Dashboard settings
-;; (unless (package-installed-p 'dashboard)
-;;   (package-install 'dashboard))
-
-;; (use-package dashboard
-;;   :ensure t
-;;   :config
-;;   (dashboard-setup-startup-hook)
-;;   (setq dashboard-startup-banner "~/.emacs.d/img/pache-5.png"
-;; 	dashboard-banner-logo-title "P A C H E M A C S"
-;; 	dashboard-footer-messages '("\"The shrine isn't a good place for using magic.\"")
-;; 	dashboard-center-content t
-;; 	dashboard-vertically-center-content t
-;; 	dashboard-items '((recents . 8)
-;; 			  (bookmarks . 5)
-;; 			  (projects . 3)
-;; 			  (agenda . 3))))
+;; No sound
+(setq visible-bell t)
+(setq ring-bell-function 'ignore)
 
 ;; Some other visual tweaks
 (fringe-mode 1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
 (when window-system (add-hook 'prog-mode-hook 'hl-line-mode))
 (setq scroll-conservatively 100
       resize-mini-windows 'grow-only

@@ -113,6 +113,38 @@
 ;; (set-wallpaper)
 (exwm-enable)
 
+(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
+                    (lambda () (interactive)
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
+(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
+                    (lambda () (interactive)
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
+
+(exwm-input-set-key (kbd "s-q") (kill-this-buffer))
+(exwm-input-set-key (kbd "s-f") 'firefox-search-term)
+(exwm-input-set-key (kbd "s-l") 'librewolf-search-term)
+(exwm-input-set-key (kbd "s-SPC") 'ivy-switch-buffer)
+(exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
+
+;; YouTube Download - must have yt-dlp installed
+(defun download-yt ()
+  "Download a YouTube video URL interactively to ~/Videos."
+  (interactive)
+  (let* ((url (read-string "Enter YouTube URL: "))
+         (quality (completing-read "Choose video quality: " '("144p" "Best Quality") nil t))
+         (videos-dir (expand-file-name "~/Videos/"))
+         (command "")
+         (file-name-template "%(title)s"))
+    (cond
+     ((equal quality "144p")
+      (setq command (format "yt-dlp -f 'bestvideo[height<=144]+bestaudio' -o '%s%s' %s"
+                           videos-dir file-name-template url)))
+     ((equal quality "Best Quality")
+      (setq command (format "yt-dlp -f 'bestvideo+bestaudio' -o '%s%s' %s"
+                           videos-dir file-name-template url))))
+    (start-process-shell-command "yt-dlp" "*yt-dlp*" command)
+    (message "Downloading video: %s at %s quality" url quality)))
+
 ;; (use-package tab-bar
 ;;   :custom
 ;;   (tab-bar-format '(tab-bar-format-align-right ; Optional: Remove to align left.

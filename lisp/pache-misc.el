@@ -192,13 +192,13 @@
 ;; Redo command
 (evil-set-undo-system 'undo-redo)
 
-(use-package tab-bar
-  :custom
-  (tab-bar-format '(;tab-bar-format-tabs        ; Optional: Remove to _only_ display the bar.
-                    tab-bar-format-align-right ; Optional: Remove to align left.
-                    tab-bar-format-global))
-  :config
-  (tab-bar-mode 1))
+;;(use-package tab-bar
+;;  :custom
+;;  (tab-bar-format '(;tab-bar-format-tabs        ; Optional: Remove to _only_ display the bar.
+;;                    tab-bar-format-align-right ; Optional: Remove to align left.
+;;                    tab-bar-format-global))
+;;  :config
+;;  (tab-bar-mode 1))
 
 ;;; Org settings
 ;; Install Geiser to work with Scheme in Org files
