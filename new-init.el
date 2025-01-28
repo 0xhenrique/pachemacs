@@ -36,10 +36,13 @@
   (package-vc-install "https://github.com/slotThe/vc-use-package"))
 (require 'vc-use-package)
 
-(use-package ef-themes
-  :ensure t
-  :config
-  (ef-themes-select 'ef-dark))
+;; Set the default theme
+(load-theme 'anti-zenburn t)
+
+;; (use-package ef-themes
+;;   :ensure t
+;;   :config
+;;   (ef-themes-select 'ef-dark))
 
 (use-package vertico
   :ensure t
@@ -174,8 +177,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("1ad12cda71588cc82e74f1cabeed99705c6a60d23ee1bb355c293ba9c000d4ac" "f1c8202c772d1de83eda4765fe21429a528a4fb350a28394d3705fe9678ed1f9" "54a07e4250791390837b3b30289c49b4972cdf350fb12e6430715fc97087caf4" "deb645f30fd25191b6e8d0f397cc1dd172a352f22094747be2ff527394cc9f57" default))
  '(package-selected-packages
-   '(clojure-mode helm desktop-environment which-key vterm vertico vc-use-package sudo-edit rainbow-delimiters paredit marginalia magit helpful evil-collection ef-themes denote counsel corfu)))
+   '(acme-theme anti-zenburn-theme plan9-theme clojure-mode helm desktop-environment which-key vterm vertico vc-use-package sudo-edit rainbow-delimiters paredit marginalia magit helpful evil-collection ef-themes denote counsel corfu)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
