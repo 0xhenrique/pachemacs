@@ -2,7 +2,7 @@
 ;;; Code:
 ;;; Commentary:
 
-;; You can add more themes here
+;; Add more themes here
 (unless (package-installed-p 'gruvbox-theme)
   (package-install 'gruvbox-theme))
 (unless (package-installed-p 'catppuccin-theme)
@@ -20,7 +20,7 @@
 ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Set the default theme
-(load-theme 'catppuccin t)
+(load-theme 'gruvbox-dark-hard t)
 
 ;; Some icons for Emacs
 (unless (package-installed-p 'all-the-icons)
