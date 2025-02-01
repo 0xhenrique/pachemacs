@@ -4,7 +4,13 @@
 
 (unless (package-installed-p 'yasnippet)
   (package-install 'yasnippet))
-(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+
+(cond
+ ((eq system-type 'gnu/linux)
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets")))
+ ((eq system-type 'windows-nt)
+  (setq yas-snippet-dirs '("C:/snippets"))))
+
 (use-package yasnippet
   :ensure
   :bind

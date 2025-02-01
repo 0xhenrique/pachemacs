@@ -19,12 +19,8 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;;; NVM for Node development
-(unless (package-installed-p 'nvm)
-  (package-install 'nvm))
-
-;;; Music Player inside Emacs!
-(unless (package-installed-p 'emms)
-  (package-install 'emms))
+;;(unless (package-installed-p 'nvm)
+;;  (package-install 'nvm))
 
 ;; Adds LSP support. Note that you must have the respective LSP
 ;; server installed on your machine to use it with Eglot. e.g.

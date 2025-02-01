@@ -9,15 +9,15 @@
   (package-install 'catppuccin-theme))
 
 ;; Mode line settings
-(display-battery-mode 1)
-(setq display-time-day-and-date t)
-(display-time-mode 1)
+;(display-battery-mode 1)
+;(setq display-time-day-and-date t)
+;(display-time-mode 1)
 
 ;; Set frame transparency
-(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
-(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;;(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+;;(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+;;(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Set the default theme
 (load-theme 'catppuccin t)
@@ -50,8 +50,7 @@
 
 (when window-system (add-hook 'prog-mode-hook 'hl-line-mode))
 (setq scroll-conservatively 100
-      resize-mini-windows 'grow-only
-      display-time-default-load-average nil)
+      resize-mini-windows 'grow-only)
 
 (provide 'pache-ui)
 ;;; pache-ui.el ends here
