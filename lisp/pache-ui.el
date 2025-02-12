@@ -20,7 +20,7 @@
 ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Set the default theme
-(load-theme 'catppuccin t)
+(load-theme 'acme t)
 
 ;; Some icons for Emacs
 (unless (package-installed-p 'all-the-icons)

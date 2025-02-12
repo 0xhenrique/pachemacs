@@ -38,6 +38,17 @@
     (start-process-shell-command "yt-dlp" "*yt-dlp*" command)
     (message "Downloading audio: %s to %s" url music-dir)))
 
+;; Convert MP4 to WEBM (No Sound)
+(defun convert-mp4-to-webm ()
+  "Convert file from MP4 to WEBM without audio and move it to ~/Videos/dump/."
+  (interactive)
+  (let* ((file (dired-get-file-for-visit))
+         (output-dir (expand-file-name "~/Videos/dump/"))
+         (output-file (concat output-dir (file-name-base file) ".webm"))
+         (command (format "ffmpeg -i \"%s\" -an \"%s\"" file output-file)))
+    (shell-command command)
+    (message "Converted %s to %s" file output-file)))
+
 ;; Firefox Search
 (defun firefox-search-term (term)
   "Prompt for a search term and open Firefox to search for it."

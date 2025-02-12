@@ -45,7 +45,7 @@
 (display-time-mode t)
 (unless (package-installed-p 'exwm)
   (package-install 'exwm))
-(setq exwm-workspace-number 10)
+(setq exwm-workspace-number 3)
 
 (add-hook 'exwm-update-class-hook
           (lambda ()
@@ -59,6 +59,20 @@
                       (string-prefix-p "sun-awt-X11-" exwm-instance-name)
                       (string= "gimp" exwm-instance-name))
               (exwm-workspace-rename-buffer exwm-title))))
+
+;; A windows PC forced me to do this
+(defun exwm-switch-workspace (direction)
+  "Choose the DIRECTION."
+  (interactive "sDirection: ")
+  (let ((current-workspace exwm-workspace-current-index))
+    (cond
+     ((string= direction "left") (exwm-workspace-switch (1- current-workspace)))
+     ((string= direction "right") (exwm-workspace-switch (1+ current-workspace))))))
+
+;;helm-M-x-execute-command: s- must prefix a single character, not left
+;;All interactive functions should have documentation
+(exwm-input-set-key (kbd "C-s-<left>") (lambda () (interactive) (exwm-switch-workspace "left")))
+(exwm-input-set-key (kbd "C-s-<right>") (lambda () (interactive) (exwm-switch-workspace "right")))
 
 (setq exwm-input-global-keys
       `(
