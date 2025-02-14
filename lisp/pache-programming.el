@@ -6,9 +6,6 @@
 (unless (package-installed-p 'eglot)
   (package-install 'eglot))
 
-(unless (package-installed-p 'lsp-mode)
-  (package-install 'lsp-mode))
-
 ;;; Vue Support
 (unless (package-installed-p 'vue-mode)
   (package-install 'vue-mode))
