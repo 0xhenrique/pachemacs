@@ -65,9 +65,9 @@
 
 ;; Kensington Orbit scroll utility - change the '11' to the actual ID from 'xinput list' command
 (start-process-shell-command
- "xinput" nil "xinput set-prop 11 'libinput Middle Emulation Enabled' 1")
+ "xinput" nil "xinput set-prop 12 'libinput Middle Emulation Enabled' 1")
 (start-process-shell-command
- "xinput" nil "xinput set-prop 11 'libinput Scroll Method Enabled' 0 0 1")
+ "xinput" nil "xinput set-prop 12 'libinput Scroll Method Enabled' 0 0 1")
 
 (provide 'pache-utils)
 ;;; pache-utils.el ends here
