@@ -5,12 +5,7 @@
 <template>
 </template>
 
-<script lang="$1">
-export default {
-  name: '$0',
-
-  props: {},
-}
+<script lang="$0">
 </script>
 
 <style>

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: title
+# key: ~title
+# --
+#+title: $1
+#+date: <`(format-time-string "%Y-%m-%d %H:%M")`>
+#+filetags: $2
+#+ATTR_HTML: :border 2 :rules all :frame border
+$0
