@@ -19,7 +19,21 @@
 (start-process-shell-command
  "picom" nil "picom")
 
-(defun efs/exwm-update-title ()
+;; Firefox Search
+(defun pache/firefox-search-term (term)
+  "Prompt for a search TERM and open Firefox to search for it."
+  (interactive "sFirefox search term: ")
+  (start-process-shell-command
+   "firefox" nil (concat "firefox --search " (shell-quote-argument term))))
+
+;; Librewolf Search
+(defun pache/librewolf-search-term (term)
+  "Prompt for a search TERM and open Librewolf to search for it."
+  (interactive "sLibrewolf search term: ")
+  (start-process-shell-command
+   "librewolf" nil (concat "librewolf --search " (shell-quote-argument term))))
+
+(defun pache/exwm-update-title ()
   (pcase exwm-class-name
     ;; This is used to avoid the buffers being named like "librewolf<3>", so we use that window's title as buffer name
     ("LibreWolf" (exwm-workspace-rename-buffer (format "Librewolf: %s" exwm-title)))
@@ -27,7 +41,7 @@
     ("Transmission-gtk" (exwm-workspace-rename-buffer (format "Transmission: %s" exwm-title)))))
 
 ;; When window title updates, use it to set the buffer name
-(add-hook 'exwm-update-title-hook #'efs/exwm-update-title)
+(add-hook 'exwm-update-title-hook #'pache/exwm-update-title)
 ;; (add-hook 'exwm-init-hook (lambda () (dashboard-refresh-buffer)))
 ;; (add-hook 'after-init-hook
 ;; 	  (lambda ()
@@ -60,8 +74,8 @@
                       (string= "gimp" exwm-instance-name))
               (exwm-workspace-rename-buffer exwm-title))))
 
-;; A windows PC forced me to do this
-(defun exwm-switch-workspace (direction)
+;; A Windows PC forced me to do this since I couldn't change the keybinds there lol
+(defun pache/exwm-switch-workspace (direction)
   "Choose the DIRECTION."
   (interactive "sDirection: ")
   (let ((current-workspace exwm-workspace-current-index))
@@ -141,7 +155,7 @@
 (exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
 
 ;; YouTube Download - must have yt-dlp installed
-(defun download-yt ()
+(defun pache/download-yt ()
   "Download a YouTube video URL interactively to ~/Videos."
   (interactive)
   (let* ((url (read-string "Enter YouTube URL: "))
@@ -158,18 +172,6 @@
                            videos-dir file-name-template url))))
     (start-process-shell-command "yt-dlp" "*yt-dlp*" command)
     (message "Downloading video: %s at %s quality" url quality)))
-
-;; (use-package tab-bar
-;;   :custom
-;;   (tab-bar-format '(tab-bar-format-align-right ; Optional: Remove to align left.
-;;                     tab-bar-format-global))
-;;   :config
-;;   (tab-bar-mode 1))
-
-;; (use-package i3bar
-;;   :ensure t
-;;   :config
-;;   (i3bar-mode 1))
 
 (provide 'pache-exwm)
 ;;; pache-exwm.el ends here

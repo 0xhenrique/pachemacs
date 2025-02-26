@@ -12,15 +12,13 @@
 ;; (define-prefix-command 'my-evil-space-map)
 ;; (define-key evil-normal-state-map (kbd "SPC") 'my-evil-space-map)
 
-;; Bind your commands to sequences starting with `SPC` in normal mode
-;; (define-key evil-normal-state-map (kbd "SPC s w") #'consult-ripgrep)
-;; (define-key evil-normal-state-map (kbd "SPC s f") #'project-find-file)
-;; (define-key evil-normal-state-map (kbd "SPC g s") #'magit-status)
-
 ;;; Multiple cursors
 (unless (package-installed-p 'evil-mc)
   (package-install 'evil-mc))
 (global-evil-mc-mode 1)
+
+;; Redo command
+(evil-set-undo-system 'undo-redo)
 
 ;; Enable Vim emulation in programming buffers
 (add-hook 'prog-mode-hook #'evil-local-mode)

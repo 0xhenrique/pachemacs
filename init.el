@@ -43,6 +43,7 @@
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
 (save-place-mode t)
+(flymake-mode 0)
 (savehist-mode t)
 (recentf-mode t)
 (defalias 'yes-or-no #'y-or-n-p)

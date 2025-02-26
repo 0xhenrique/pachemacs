@@ -7,7 +7,7 @@
  "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
 
 ;; YouTube video download
-(defun download-yt ()
+(defun pache/download-yt ()
   "Download a YouTube video URL interactively to ~/Videos."
   (interactive)
   (let* ((url (read-string "Enter YouTube URL: "))
@@ -26,7 +26,7 @@
     (message "Downloading video: %s at %s quality" url quality)))
 
 ;; YouTube music download
-(defun download-yt-audio ()
+(defun pache/download-yt-audio ()
   "Download the audio from a YouTube video URL to a user-selected directory."
   (interactive)
   (let* ((url (read-string "Enter YouTube URL: "))
@@ -39,7 +39,7 @@
     (message "Downloading audio: %s to %s" url music-dir)))
 
 ;; Convert MP4 to WEBM (No Sound)
-(defun convert-mp4-to-webm ()
+(defun pache/convert-mp4-to-webm ()
   "Convert file from MP4 to WEBM without audio and move it to ~/Videos/dump/."
   (interactive)
   (let* ((file (dired-get-file-for-visit))
@@ -69,10 +69,9 @@
 (start-process-shell-command
  "xinput" nil "xinput set-prop 12 'libinput Scroll Method Enabled' 0 0 1")
 
-;; Deluge Daemon
+;; Deluge Daemon + Web
 (start-process-shell-command
  "deluged" nil "deluged")
-;; Deluge Web Interface
 (start-process-shell-command
  "deluge-web" nil "deluge-web")
 

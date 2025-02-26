@@ -20,7 +20,11 @@
 ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Set the default theme
-(load-theme 'acme t)
+(defun pache/random-theme ()
+  "Load a random theme from a predefined list of themes."
+  (let ((themes '(catppuccin gruvbox-dark-hard modus-vivendi)))
+    (load-theme (nth (random (length themes)) themes) t)))
+(add-hook 'emacs-startup-hook 'pache/random-theme)
 
 ;; Some icons for Emacs
 (unless (package-installed-p 'all-the-icons)
@@ -29,14 +33,6 @@
   (package-install 'nerd-icons))
 (use-package all-the-icons
   :if (display-graphic-p))
-
-;; Install Doom Modeline
-(unless (package-installed-p 'doom-modeline)
-  (package-install 'doom-modeline))
-
-(use-package doom-modeline
- :ensure t
- :init (doom-modeline-mode 1))
 
 ;; No sound
 (setq visible-bell t)
@@ -48,7 +44,6 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(when window-system (add-hook 'prog-mode-hook 'hl-line-mode))
 (setq scroll-conservatively 100
       resize-mini-windows 'grow-only)
 
