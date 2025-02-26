@@ -2,19 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq org-publish-project-alist
-      `(
-	("blog"
-	 :base-directory "~/workspace/personal/0xhenrique-blog/org-content/"
-	 :recursive t
-	 :publishing-directory "~/workspace/personal/0xhenrique-blog/content/"
-	 :publishing-function org-hugo-export-to-md)))
-
-(use-package ox-hugo
-  :ensure t
-  :pin melpa
-  :after ox)
-
 ;; M-x org-static-blog-create-new-post~ and write the content
 ;; M-x org-static-blog-publish~ and upload to your webhost
 (use-package org-static-blog

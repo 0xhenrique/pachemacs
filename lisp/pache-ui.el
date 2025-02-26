@@ -39,6 +39,7 @@
 (setq ring-bell-function 'ignore)
 
 ;; Some other visual tweaks
+(rainbow-delimiters-mode 1)
 (fringe-mode 1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)

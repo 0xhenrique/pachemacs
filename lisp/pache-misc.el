@@ -60,12 +60,13 @@
 (use-package corfu
   :ensure t
   :init
-  (global-corfu-mode)
+  (global-corfu-mode 1)
+  (corfu-popupinfo-mode 1)
   :custom
   (corfu-auto t)
   ;; You may want to play with delay/prefix/styles to suit your preferences.
-  (corfu-auto-delay 0)
-  (corfu-auto-prefix 3)
+  (corfu-auto-delay 1)
+  (corfu-auto-prefix 1)
   (completion-styles '(basic)))
 
 ;; Enable autocompletion by default in programming buffers
@@ -74,13 +75,6 @@
 ;;; Git client
 (unless (package-installed-p 'magit)
   (package-install 'magit))
-
-;;; Indication of local VCS changes
-(unless (package-installed-p 'diff-hl)
-  (package-install 'diff-hl))
-
-(unless (package-installed-p 'move-text)
-  (package-install 'move-text))
 
 ;;; EditorConfig support
 (unless (package-installed-p 'editorconfig)

@@ -12,11 +12,6 @@
 ;; (define-prefix-command 'my-evil-space-map)
 ;; (define-key evil-normal-state-map (kbd "SPC") 'my-evil-space-map)
 
-;;; Multiple cursors
-(unless (package-installed-p 'evil-mc)
-  (package-install 'evil-mc))
-(global-evil-mc-mode 1)
-
 ;; Redo command
 (evil-set-undo-system 'undo-redo)
 

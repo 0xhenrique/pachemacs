@@ -33,6 +33,7 @@
       frame-resize-pixelwise t
       auto-save-default nil
       visual-line-mode t
+      context-menu-mode t
       scroll-step 1
       ring-bell-function 'ignore
       visible-bell 1
@@ -48,6 +49,8 @@
 (recentf-mode t)
 (defalias 'yes-or-no #'y-or-n-p)
 (global-display-line-numbers-mode t)
+(setq display-line-numbers 'relative)
+(global-hl-line-mode t)
 
 ;;; Emacs Perf
 (setq gc-cons-threshold 100000000

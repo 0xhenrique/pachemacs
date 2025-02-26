@@ -10,9 +10,6 @@
 (define-key evil-normal-state-map (kbd "SPC g g") #'counsel-git-grep)
 (define-key evil-normal-state-map (kbd "SPC b l") #'helm-buffers-list)
 
-(global-set-key (kbd "M-p") 'move-text-up)
-(global-set-key (kbd "M-n") 'move-text-down)
-
 (global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "C-c k") 'counsel-rg)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
