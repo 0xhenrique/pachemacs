@@ -5,6 +5,10 @@
 (unless (package-installed-p 'evil)
   (package-install 'evil))
 
+(unless (package-installed-p 'evil-collection)
+  (package-install 'evil-collection))
+
+(evil-collection-init '(dired magit))
 (evil-mode t)
 
 (require 'evil)
