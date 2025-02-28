@@ -8,6 +8,7 @@
 (unless (package-installed-p 'evil-collection)
   (package-install 'evil-collection))
 
+(setq evil-want-keybinding nil)
 (evil-collection-init '(dired magit))
 (evil-mode t)
 

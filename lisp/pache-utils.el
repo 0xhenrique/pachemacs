@@ -6,6 +6,17 @@
 (start-process-shell-command
  "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
 
+;; Call Lum to search for a bookmark
+(defun pache/my-consult-bookmark ()
+  "Select a bookmark using `completing-read` and copy it to the clipboard."
+  (interactive)
+  (let* ((candidates (split-string (shell-command-to-string "java -jar ~/workspace/personal/lum/target/uberjar/lum-1.0.0-SNAPSHOT-standalone.jar -l") "\n" t))
+         (selection (completing-read "Select bookmark: " candidates)))
+    (when selection
+      (kill-new selection)
+      (message "Copied to clipboard: %s" selection))))
+(global-set-key (kbd "C-c b") 'pache/my-consult-bookmark)
+
 ;; YouTube video download
 (defun pache/download-yt ()
   "Download a YouTube video URL interactively to ~/Videos."
@@ -50,14 +61,14 @@
     (message "Converted %s to %s" file output-file)))
 
 ;; Firefox Search
-(defun firefox-search-term (term)
+(defun pache/firefox-search-term (term)
   "Prompt for a search TERM and open Firefox to search for it."
   (interactive "sFirefox search term: ")
   (start-process-shell-command
    "firefox" nil (concat "firefox --search " (shell-quote-argument term))))
 
 ;; Librewolf Search
-(defun librewolf-search-term (term)
+(defun pache/librewolf-search-term (term)
   "Prompt for a search TERM and open Librewolf to search for it."
   (interactive "sLibrewolf search term: ")
   (start-process-shell-command

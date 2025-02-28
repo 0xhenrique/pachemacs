@@ -2,9 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(add-to-list 'erc-modules 'image)
-(erc-update-modules)
-
 (setq erc-user-full-name "Henrique Marques")
 
 (defun pache/my-erc-set-nick-and-full-name (&rest _args)

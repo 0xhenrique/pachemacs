@@ -19,20 +19,6 @@
 (start-process-shell-command
  "picom" nil "picom")
 
-;; Firefox Search
-(defun pache/firefox-search-term (term)
-  "Prompt for a search TERM and open Firefox to search for it."
-  (interactive "sFirefox search term: ")
-  (start-process-shell-command
-   "firefox" nil (concat "firefox --search " (shell-quote-argument term))))
-
-;; Librewolf Search
-(defun pache/librewolf-search-term (term)
-  "Prompt for a search TERM and open Librewolf to search for it."
-  (interactive "sLibrewolf search term: ")
-  (start-process-shell-command
-   "librewolf" nil (concat "librewolf --search " (shell-quote-argument term))))
-
 (defun pache/exwm-update-title ()
   (pcase exwm-class-name
     ;; This is used to avoid the buffers being named like "librewolf<3>", so we use that window's title as buffer name
@@ -46,15 +32,6 @@
 ;; (add-hook 'after-init-hook
 ;; 	  (lambda ()
 ;; 	    (switch-to-buffer "*dashboard*")))
-
-;;  If you want to set a wallpaper, uncomment the following function and set a correct path to feh
-; (defun set-wallpaper()
-;   (interactive)
-;   (start-process-shell-command "feh" nil "feh --bg-scale ~/Pictures/Wallpapers/waifu.png"))
-
-;; Maybe you'll want to set some transparency when using a wallpaper
-; (set-frame-parameter (selected-frame) 'alpha '(93 . 93))
-; (add-to-list 'default-frame-alist 'alpha '(93 . 93))
 
 (display-time-mode t)
 (unless (package-installed-p 'exwm)
@@ -85,8 +62,8 @@
 
 ;;helm-M-x-execute-command: s- must prefix a single character, not left
 ;;All interactive functions should have documentation
-(exwm-input-set-key (kbd "C-s-<left>") (lambda () (interactive) (exwm-switch-workspace "left")))
-(exwm-input-set-key (kbd "C-s-<right>") (lambda () (interactive) (exwm-switch-workspace "right")))
+(exwm-input-set-key (kbd "C-s-<left>") (lambda () (interactive) (pache/exwm-switch-workspace "left")))
+(exwm-input-set-key (kbd "C-s-<right>") (lambda () (interactive) (pache/exwm-switch-workspace "right")))
 
 (setq exwm-input-global-keys
       `(
@@ -153,25 +130,6 @@
 (exwm-input-set-key (kbd "s-l") 'librewolf-search-term)
 (exwm-input-set-key (kbd "s-SPC") 'ivy-switch-buffer)
 (exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
-
-;; YouTube Download - must have yt-dlp installed
-(defun pache/download-yt ()
-  "Download a YouTube video URL interactively to ~/Videos."
-  (interactive)
-  (let* ((url (read-string "Enter YouTube URL: "))
-         (quality (completing-read "Choose video quality: " '("144p" "Best Quality") nil t))
-         (videos-dir (expand-file-name "~/Videos/"))
-         (command "")
-         (file-name-template "%(title)s"))
-    (cond
-     ((equal quality "144p")
-      (setq command (format "yt-dlp -f 'bestvideo[height<=144]+bestaudio' -o '%s%s' %s"
-                           videos-dir file-name-template url)))
-     ((equal quality "Best Quality")
-      (setq command (format "yt-dlp -f 'bestvideo+bestaudio' -o '%s%s' %s"
-                           videos-dir file-name-template url))))
-    (start-process-shell-command "yt-dlp" "*yt-dlp*" command)
-    (message "Downloading video: %s at %s quality" url quality)))
 
 (provide 'pache-exwm)
 ;;; pache-exwm.el ends here

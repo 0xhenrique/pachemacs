@@ -8,7 +8,7 @@
 (package-initialize)
 
 ;; Modules for Pachemacs
-;;(load "~/.emacs.d/lisp/pache-exwm.el")
+(load "~/.emacs.d/lisp/pache-exwm.el")
 (load "~/.emacs.d/lisp/pache-ui.el")
 (load "~/.emacs.d/lisp/pache-win.el")
 (load "~/.emacs.d/lisp/pache-evil.el")
@@ -49,14 +49,14 @@
 (recentf-mode t)
 (defalias 'yes-or-no #'y-or-n-p)
 (global-display-line-numbers-mode t)
-(setq display-line-numbers 'relative)
 (global-hl-line-mode t)
 
 ;;; Emacs Perf
+(run-with-idle-timer 2 t (lambda () (garbage-collect)))
 (setq gc-cons-threshold 100000000
       read-process-output-max (* (* 1024 1024) 3)
+      display-line-numbers 'relative
       inhibit-compacting-font-caches t)
-(run-with-idle-timer 2 t (lambda () (garbage-collect)))
 
 (add-hook 'emacs-startup-hook
           (lambda ()
