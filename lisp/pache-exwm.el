@@ -2,8 +2,15 @@
 ;;; Code:
 ;;; Commentary:
 
+(unless (package-installed-p 'exwm)
+  (package-install 'exwm))
+;; Load EXWM.
+(require 'exwm)
 (require 'exwm-randr)
-;; This is needed because I prefer to only use the main monitor
+(icomplete-vertical-mode 1)
+(server-start)
+
+;; Only use the main monitor
 (start-process-shell-command
  "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
 
@@ -34,8 +41,6 @@
 ;; 	    (switch-to-buffer "*dashboard*")))
 
 (display-time-mode t)
-(unless (package-installed-p 'exwm)
-  (package-install 'exwm))
 (setq exwm-workspace-number 3)
 
 (add-hook 'exwm-update-class-hook
@@ -60,20 +65,20 @@
      ((string= direction "left") (exwm-workspace-switch (1- current-workspace)))
      ((string= direction "right") (exwm-workspace-switch (1+ current-workspace))))))
 
-;;helm-M-x-execute-command: s- must prefix a single character, not left
-;;All interactive functions should have documentation
-(exwm-input-set-key (kbd "C-s-<left>") (lambda () (interactive) (pache/exwm-switch-workspace "left")))
-(exwm-input-set-key (kbd "C-s-<right>") (lambda () (interactive) (pache/exwm-switch-workspace "right")))
-
 (setq exwm-input-global-keys
       `(
+	;; Match Windows keybinds
+	([C-s-left] . (lambda () (interactive) (pache/exwm-switch-workspace "left")))
+	([C-s-right] . (lambda () (interactive ) (pache/exwm-switch-workspace "right")))
+
         ;; Bind "s-r" to exit char-mode and fullscreen mode.
         ([?\s-r] . exwm-reset)
+
         ;; Bind "s-w" to switch workspace interactively.
         ([?\s-w] . exwm-workspace-switch)
 	;; Move between windows
-	([s-left] . windmove-left)
-	([s-right] . windmove-right)
+	([s-left] . (pache/exwm-switch-workspace "left"))
+	([s-right] . (pache/exwm-switch-workspace "right"))
 	([s-up] . windmove-up)
 	([s-down] . windmove-down)
         ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
@@ -114,22 +119,30 @@
         ([?\C-y] . [?\C-v])
         ;; search
         ([?\C-s] . [?\C-f])))
-;; (setq exwm-workspace-minibuffer-position 'top)
-;; (set-wallpaper)
+;(define-key exwm-mode-map [?\C-q] #'exwm-input-send-next-key)
+;(setq exwm-workspace-minibuffer-position 'bottom)
+
+;;(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
+;;                    (lambda () (interactive)
+;;                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
+;;(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
+;;                    (lambda () (interactive)
+;;                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
+
+;;(exwm-input-set-key (kbd "s-q") (kill-this-buffer))
+;;(exwm-input-set-key (kbd "s-f") 'firefox-search-term)
+;;(exwm-input-set-key (kbd "s-l") 'librewolf-search-term)
+;;(exwm-input-set-key (kbd "s-SPC") 'ivy-switch-buffer)
+;;(exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
+;;(global-set-key (kbd "C-s-<left>") (lambda () (interactive) (pache/exwm-switch-workspace "left")))
+;;(global-set-key (kbd "C-s-<right>") (lambda () (interactive) (pache/exwm-switch-workspace "right")))
+
+(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
+(exwm-input-set-key (kbd "<XF86AudioLowerVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
+;;(global-set-key (kbd "<XF86AudioRaiseVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
+;;(global-set-key (kbd "<XF86AudioLowerVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
+
 (exwm-enable)
-
-(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
-                    (lambda () (interactive)
-                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
-(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
-                    (lambda () (interactive)
-                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
-
-(exwm-input-set-key (kbd "s-q") (kill-this-buffer))
-(exwm-input-set-key (kbd "s-f") 'firefox-search-term)
-(exwm-input-set-key (kbd "s-l") 'librewolf-search-term)
-(exwm-input-set-key (kbd "s-SPC") 'ivy-switch-buffer)
-(exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
 
 (provide 'pache-exwm)
 ;;; pache-exwm.el ends here

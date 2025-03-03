@@ -10,7 +10,7 @@
 (unless (package-installed-p 'ef-themes)
   (package-install 'ef-themes))
 
-(load-theme 'ef-duo-dark)
+(load-theme 'gruvbox-dark-hard t)
 
 ;; Icons
 (unless (package-installed-p 'all-the-icons)
@@ -44,7 +44,7 @@
 ;; Some other visual tweaks
 (all-the-icons-dired-mode t)
 (rainbow-delimiters-mode t)
-(fringe-mode t)
+;;(fringe-mode t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)

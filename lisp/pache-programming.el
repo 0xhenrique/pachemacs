@@ -38,6 +38,7 @@
   :hook (;;(e. g. python-mode)
 	 (vue-mode . lsp)
 	 (javascript-mode . lsp)
+	 (elixir-mode . lsp)
 	 (web-mode . lsp)
 	 (clojure-mode . lsp)
 	 ;; which-key integration
@@ -54,6 +55,8 @@
 ;; Programming modes
 (unless (package-installed-p 'json-mode)
   (package-install 'json-mode))
+(unless (package-installed-p 'elixir-mode)
+  (package-install 'elixir-mode))
 (unless (package-installed-p 'rust-mode)
   (package-install 'rust-mode))
 (unless (package-installed-p 'typescript-mode)

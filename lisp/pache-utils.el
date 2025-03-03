@@ -81,10 +81,10 @@
  "xinput" nil "xinput set-prop 12 'libinput Scroll Method Enabled' 0 0 1")
 
 ;; Deluge Daemon + Web
-(start-process-shell-command
- "deluged" nil "deluged")
-(start-process-shell-command
- "deluge-web" nil "deluge-web")
+;;(start-process-shell-command
+;; "deluged" nil "deluged")
+;;(start-process-shell-command
+;; "deluge-web" nil "deluge-web")
 
 (provide 'pache-utils)
 ;;; pache-utils.el ends here

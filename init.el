@@ -32,7 +32,7 @@
       window-resize-pixelwise t
       frame-resize-pixelwise t
       auto-save-default nil
-      visual-line-mode t
+      visual-line-mode nil
       context-menu-mode t
       scroll-step 1
       ring-bell-function 'ignore
@@ -48,14 +48,13 @@
 (savehist-mode t)
 (recentf-mode t)
 (defalias 'yes-or-no #'y-or-n-p)
-(global-display-line-numbers-mode t)
+(global-display-line-numbers-mode nil)
 (global-hl-line-mode t)
 
 ;;; Emacs Perf
 (run-with-idle-timer 2 t (lambda () (garbage-collect)))
 (setq gc-cons-threshold 100000000
       read-process-output-max (* (* 1024 1024) 3)
-      display-line-numbers 'relative
       inhibit-compacting-font-caches t)
 
 (add-hook 'emacs-startup-hook
