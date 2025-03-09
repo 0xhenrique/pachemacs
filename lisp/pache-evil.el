@@ -11,9 +11,7 @@
 (setq evil-want-keybinding nil)
 (evil-collection-init '(dired magit))
 (evil-mode t)
-
 (require 'evil)
-(evil-mode 1)
 ;; (define-prefix-command 'my-evil-space-map)
 ;; (define-key evil-normal-state-map (kbd "SPC") 'my-evil-space-map)
 

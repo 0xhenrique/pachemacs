@@ -2,35 +2,30 @@
 ;;; Code:
 ;;; Commentary:
 
-;; Themes
 (unless (package-installed-p 'gruvbox-theme)
   (package-install 'gruvbox-theme))
 (unless (package-installed-p 'catppuccin-theme)
   (package-install 'catppuccin-theme))
 (unless (package-installed-p 'ef-themes)
   (package-install 'ef-themes))
-
-(load-theme 'gruvbox-dark-hard t)
-
-;; Icons
 (unless (package-installed-p 'all-the-icons)
   (package-install 'all-the-icons))
 (unless (package-installed-p 'all-the-icons-dired)
   (package-install 'all-the-icons-dired))
 (unless (package-installed-p 'nerd-icons)
   (package-install 'nerd-icons))
+(unless (package-installed-p 'rainbow-mode)
+  (package-install 'rainbow-mode))
+(unless (package-installed-p 'doom-modeline)
+  (package-install 'doom-modeline))
 
-;; Set frame transparency
-(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+(load-theme 'gruber-darker t)
+
+;; Frame transparency
+(set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+;(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; Set a random theme on startup
-(defun pache/random-theme ()
-  "Load a random theme from a predefined list of themes."
-  (let ((themes '(catppuccin gruvbox-dark-hard modus-vivendi)))
-    (load-theme (nth (random (length themes)) themes) t)))
 ;;(add-hook 'emacs-startup-hook 'pache/random-theme)
 
 (use-package all-the-icons
@@ -42,8 +37,11 @@
       resize-mini-windows 'grow-only)
 
 ;; Some other visual tweaks
-(all-the-icons-dired-mode t)
-(rainbow-delimiters-mode t)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook #'rainbow-mode)
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(doom-modeline-mode)
+
 ;;(fringe-mode t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)

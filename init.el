@@ -8,16 +8,16 @@
 (package-initialize)
 
 ;; Modules for Pachemacs
-(load "~/.emacs.d/lisp/pache-exwm.el")
+;(load "~/.emacs.d/lisp/pache-exwm.el")
 (load "~/.emacs.d/lisp/pache-ui.el")
-(load "~/.emacs.d/lisp/pache-win.el")
+;(load "~/.emacs.d/lisp/pache-win.el")
 (load "~/.emacs.d/lisp/pache-evil.el")
 (load "~/.emacs.d/lisp/pache-keys.el")
 (load "~/.emacs.d/lisp/pache-misc.el")
 (load "~/.emacs.d/lisp/pache-utils.el")
 (load "~/.emacs.d/lisp/pache-yas.el")
 (load "~/.emacs.d/lisp/pache-programming.el")
-(load "~/.emacs.d/lisp/pache-irc.el")
+;(load "~/.emacs.d/lisp/pache-irc.el")
 (load "~/.emacs.d/lisp/pache-media.el")
 (load "~/.emacs.d/lisp/pache-blog.el")
 
@@ -33,6 +33,7 @@
       frame-resize-pixelwise t
       auto-save-default nil
       visual-line-mode nil
+      custom-file (locate-user-emacs-file "custom-vars.el")
       context-menu-mode t
       scroll-step 1
       ring-bell-function 'ignore
@@ -41,14 +42,13 @@
       sentence-end-double-space nil
       backup-directory-alist `(("." . "~/.saves")))
 
-(setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
 (save-place-mode t)
 (flymake-mode 0)
 (savehist-mode t)
 (recentf-mode t)
 (defalias 'yes-or-no #'y-or-n-p)
-(global-display-line-numbers-mode nil)
+(global-display-line-numbers-mode 0)
 (global-hl-line-mode t)
 
 ;;; Emacs Perf
@@ -63,3 +63,4 @@
 
 (provide 'init)
 ;;; init.el ends here
+(put 'dired-find-alternate-file 'disabled nil)

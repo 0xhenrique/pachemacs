@@ -3,8 +3,8 @@
 ;;; Code:
 
 ;; Set keyboard layout switch (US and ABNT2)
-(start-process-shell-command
- "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
+;(start-process-shell-command
+; "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:win_space_toggle'")
 
 ;; Call Lum to search for a bookmark
 (defun pache/my-consult-bookmark ()
@@ -79,6 +79,19 @@
  "xinput" nil "xinput set-prop 12 'libinput Middle Emulation Enabled' 1")
 (start-process-shell-command
  "xinput" nil "xinput set-prop 12 'libinput Scroll Method Enabled' 0 0 1")
+
+;;; Create a new shell with a new name
+(defun pache/create-shell ()
+    "Create a shell with a given name."
+    (interactive);; "Prompt\n shell name:")
+    (let ((shell-name (read-string "shell name: " nil)))
+    (shell (concat "*" shell-name "*"))))
+
+;; Set a random theme on startup
+(defun pache/random-theme ()
+  "Load a random theme from a predefined list of themes."
+  (let ((themes '(catppuccin gruvbox-dark-hard modus-vivendi)))
+    (load-theme (nth (random (length themes)) themes) t)))
 
 ;; Deluge Daemon + Web
 ;;(start-process-shell-command
