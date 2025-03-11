@@ -16,7 +16,6 @@
 
 ;; File
 (define-key evil-normal-state-map (kbd "SPC f a p") #'ffap)
-(define-key evil-normal-state-map (kbd "SPC f t") #'treemacs)
 
 ;; Git
 (define-key evil-normal-state-map (kbd "SPC g s") #'magit-status)

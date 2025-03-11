@@ -19,7 +19,7 @@
 (unless (package-installed-p 'doom-modeline)
   (package-install 'doom-modeline))
 
-(load-theme 'gruber-darker t)
+(load-theme 'gruvbox-dark-hard t)
 
 ;; Frame transparency
 (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
@@ -40,6 +40,8 @@
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook #'rainbow-mode)
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(global-display-line-numbers-mode 0)
+(global-hl-line-mode t)
 (doom-modeline-mode)
 
 ;;(fringe-mode t)

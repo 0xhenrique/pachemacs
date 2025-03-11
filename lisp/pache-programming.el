@@ -25,12 +25,11 @@
 			 (lsp-enable-which-key-integration))))
 	 (vue-mode . lsp)
 	 (javascript-mode . lsp)
+	 (go-mode . lsp)
 	 (typescript-mode . lsp)
 	 (elixir-mode . lsp)
 	 (web-mode . lsp)
 	 (clojure-mode . lsp))
-  :config
-  (define-key evil-normal-state-map (kbd "SPC l") lsp-command-map)
   :commands lsp)
 
 ;; LSP Optionals
