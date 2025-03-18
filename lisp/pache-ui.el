@@ -2,31 +2,23 @@
 ;;; Code:
 ;;; Commentary:
 
-(unless (package-installed-p 'gruvbox-theme)
-  (package-install 'gruvbox-theme))
-(unless (package-installed-p 'catppuccin-theme)
-  (package-install 'catppuccin-theme))
-(unless (package-installed-p 'ef-themes)
-  (package-install 'ef-themes))
-(unless (package-installed-p 'all-the-icons)
-  (package-install 'all-the-icons))
-(unless (package-installed-p 'all-the-icons-dired)
-  (package-install 'all-the-icons-dired))
-(unless (package-installed-p 'nerd-icons)
-  (package-install 'nerd-icons))
-(unless (package-installed-p 'rainbow-mode)
-  (package-install 'rainbow-mode))
-(unless (package-installed-p 'doom-modeline)
-  (package-install 'doom-modeline))
+(dolist (pkg '(gruvbox-theme
+               catppuccin-theme
+               ef-themes
+               all-the-icons
+               all-the-icons-dired
+               nerd-icons
+               rainbow-mode
+               doom-modeline))
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
 
 (load-theme 'pache-dark t)
 
 ;; Frame transparency
-(set-frame-parameter (selected-frame) 'alpha '(93 . 93))
-;(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+(set-frame-parameter (selected-frame) 'alpha '(100 . 100))
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-;;(add-hook 'emacs-startup-hook 'pache/random-theme)
 
 (use-package all-the-icons
   :if (display-graphic-p))

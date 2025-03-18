@@ -45,7 +45,7 @@
       (pache-dark-white     "#ffffff")
       (pache-dark-black     "#000000")
       (pache-dark-bg-1      "#151819")
-      (pache-dark-bg        "#111111")
+      (pache-dark-bg        "#000000")
       (pache-dark-bg+1      "#282828")
       (pache-dark-bg+2      "#3c3836")
       (pache-dark-bg+3      "#504945")
@@ -91,7 +91,7 @@
    `(border ((t ,(list :background pache-dark-bg-1
                        :foreground pache-dark-bg+2))))
    `(cursor ((t (:background ,pache-dark-yellow))))
-   `(default ((t ,(list :foreground pache-dark-fg
+   `(default ((t ,(list :foreground pache-dark-fg+1
                         :background pache-dark-bg))))
    `(fringe ((t ,(list :background nil
                        :foreground pache-dark-bg+2))))
