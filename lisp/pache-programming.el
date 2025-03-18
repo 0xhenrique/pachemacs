@@ -9,6 +9,8 @@
 ;; Import programming languages specifics
 (load "~/.emacs.d/lisp/languages/go.el")
 (load "~/.emacs.d/lisp/languages/typescript.el")
+(load "~/.emacs.d/lisp/languages/vue.el")
+(load "~/.emacs.d/lisp/languages/rust.el")
 
 ;; Common programming setup
 (defun pache/prog-mode-setup ()

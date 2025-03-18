@@ -2,34 +2,27 @@
 ;;; Code:
 ;;; Commentary:
 
-(unless (package-installed-p 'editorconfig)
-  (package-install 'editorconfig))
-(unless (package-installed-p 'which-key)
-  (package-install 'which-key))
-(unless (package-installed-p 'geiser)
-  (package-install 'geiser))
-(unless (package-installed-p 'geiser-guile)
-  (package-install 'geiser-guile))
-(unless (package-installed-p 'magit)
-  (package-install 'magit))
-(unless (package-installed-p 'ivy)
-  (package-install 'ivy))
-(unless (package-installed-p 'evil-mc)
-  (package-install 'evil-mc))
-(unless (package-installed-p 'sudo-edit)
-  (package-install 'sudo-edit))
-(unless (package-installed-p 'counsel)
-  (package-install 'counsel))
-(unless (package-installed-p 'drag-stuff)
-  (package-install 'drag-stuff))
+(dolist (pkg '(editorconfig
+			   which-key
+			   geiser
+			   geiser-guile
+			   magit
+			   ivy
+			   evil-mc
+			   sudo-edit
+			   sudo-edit
+			   counsel
+			   drag-stuff))
+  (unless (package-installed-p pkg)
+	(package-install pkg)))
 
-(setq-default tab-width 4)
-(setq-default standard-indent 4)
-(setq-default electric-indent-inhibit t)
-(setq-default indent-tabs-mode t)
-(setq backward-delete-char-untabify-method 'nil)
+(setq-default tab-width 4
+			  standard-indent 4
+			  electric-indent-inhibit t
+			  indent-tabs-mode t)
 
 (setq read-buffer-completion-ignore-case t
+	  backward-delete-char-untabify-method 'nil
       read-file-name-completion-ignore-case t
       indent-line-function 'insert-tab
       global-auto-revert-non-file-buffers t
@@ -37,20 +30,6 @@
       ivy-use-virtual-buffers t
       counsel-find-file-at-point t
       completion-ignore-case t)
-
-;;(define-key ivy-minibuffer-map (kbd "TAB") #'ivy-partial-or-done)
-;;(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
-
-;; Enable completion by narrowing
-;(use-package vertico
-;  :ensure t
-;  :custom
-;  (vertico-cycle t)
-;  (read-buffer-completion-ignore-case t)
-;  (read-file-name-completion-ignore-case t)
-;  (completion-styles '(basic substring partial-completion flex))
-;  :init
-;  (vertico-mode))
 
 ;; Guess major mode from file name
 (setq-default major-mode

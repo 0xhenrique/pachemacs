@@ -93,6 +93,11 @@
   (let ((themes '(catppuccin gruvbox-dark-hard modus-vivendi)))
     (load-theme (nth (random (length themes)) themes) t)))
 
+;; Associate programs with files in dired-mode
+(setq openwith-associations
+      '(("\\.mp3\\'" "mpv" (file))))
+(openwith-mode 1)
+
 ;; Deluge Daemon + Web
 ;;(start-process-shell-command
 ;; "deluged" nil "deluged")

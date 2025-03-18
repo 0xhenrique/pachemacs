@@ -40,6 +40,7 @@ flycheck_*.el
 
 # projectiles files
 .projectile
+projects
 
 # directory configuration
 .dir-locals.el
@@ -73,10 +74,12 @@ recentf
 # Transient
 /transient/
 
-# Mist
+# Misc
 .dap-breakpoints
 .lsp-session-v1
 .mc-lists.el
+lsp-bridge
+custom-vars.el
 bookmarks
 eshell
 games
