@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: range
+# key: ~rang
+# --
+
+for i, v := range $1 {
+	$0
+}

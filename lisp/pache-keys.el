@@ -2,15 +2,18 @@
 ;;; Code:
 ;;; Commentary:
 
-;; Disable some evil-mode keybindings
-(define-key evil-normal-state-map (kbd "S-k") nil)
-(global-set-key (kbd "S-k") nil)
-
 ;; Buffer
 (define-key evil-normal-state-map (kbd "SPC b l") #'counsel-switch-buffer)
 
+;; Code
+;(define-key evil-normal-state-map (kbd "SPC c b") #'pache/typescript-compile)
+;(define-key evil-normal-state-map (kbd "SPC c f") #'pache/typescript-format)
+;(define-key evil-normal-state-map (kbd "SPC c l p") #'pache/typescript-compile)
+;(define-key evil-normal-state-map (kbd "SPC c l f") #'pache/typescript-lint-file)
+;(define-key evil-normal-state-map (kbd "SPC c t") #'pache/typescript-test)
+
 ;; Evaluation
-(define-key evil-normal-state-map (kbd "SPC e r") #'eval-region)
+(define-key evil-visual-state-map (kbd "SPC e r") #'eval-region)
 (define-key evil-normal-state-map (kbd "SPC e b") #'eval-buffer)
 (define-key evil-normal-state-map (kbd "SPC e l") #'eval-last-sexp)
 
@@ -22,12 +25,17 @@
 (define-key evil-normal-state-map (kbd "SPC g g") #'counsel-git-grep)
 
 ;; Project
-(define-key evil-normal-state-map (kbd "SPC p w") #'counsel-rg)
+(define-key evil-normal-state-map (kbd "SPC p g") #'counsel-rg)
+(define-key evil-normal-state-map (kbd "SPC p f") #'project-find-file)
 
 ;; Search
 (define-key evil-normal-state-map (kbd "SPC s g") #'counsel-rg)
 (define-key evil-normal-state-map (kbd "SPC s f") #'project-find-file)
 (define-key evil-normal-state-map (kbd "SPC s o") #'swiper-isearch)
+
+;; Theme
+(define-key evil-normal-state-map (kbd "SPC t l") #'counsel-load-theme)
+(define-key evil-normal-state-map (kbd "SPC t d") #'disable-theme)
 
 ;; Evil Multiple Cursors
 (global-set-key (kbd "C->") 'evil-mc-make-and-goto-next-match)
@@ -74,11 +82,6 @@
 ;  (define-key vertico-map (kbd "M-d") #'vertico-directory-delete-char))
 
 ;; Unused
-;(global-set-key (kbd "M-x") 'counsel-M-x)
-;(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-;(global-set-key (kbd "s-d") 'helm-run-external-command)
-;(global-set-key (kbd "C-c v") 'ivy-push-view)
-;(global-set-key (kbd "C-c V") 'ivy-pop-view)
 ;(global-set-key (kbd "C-c c") 'counsel-compile)
 ;(global-set-key (kbd "C-c g") 'counsel-git)
 ;(global-set-key (kbd "C-x C-f") 'counsel-find-file)

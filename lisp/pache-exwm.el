@@ -6,25 +6,26 @@
   (package-install 'exwm))
 ;; Load EXWM.
 (require 'exwm)
-(require 'exwm-randr)
-(icomplete-vertical-mode 1)
-(server-start)
+;(require 'exwm-randr)
+;(icomplete-vertical-mode 1)
+
+;(server-start)
 
 ;; Only use the main monitor
-(start-process-shell-command
- "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
+;(start-process-shell-command
+; "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
 
 ;; Set keyboard layout switch (US and ABNT2)
 (start-process-shell-command
  "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
 
 ;; Set wallpaper
-(start-process-shell-command
- "feh" nil "feh --bg-scale ~/Pictures/papes/patchy/3.jpg")
+;(start-process-shell-command
+; "feh" nil "feh --bg-scale ~/Pictures/papes/patchy/3.jpg")
 
 ;; Start picom
-(start-process-shell-command
- "picom" nil "picom")
+;(start-process-shell-command
+; "picom" nil "picom")
 
 (defun pache/exwm-update-title ()
   (pcase exwm-class-name
@@ -40,7 +41,7 @@
 ;; 	  (lambda ()
 ;; 	    (switch-to-buffer "*dashboard*")))
 
-(display-time-mode t)
+;(display-time-mode t)
 (setq exwm-workspace-number 3)
 
 (add-hook 'exwm-update-class-hook
@@ -101,6 +102,8 @@
 (setq exwm-input-simulation-keys
       '(
         ;; movement
+        ([?\C-c] . [?\C-c])
+        ([?\C-v] . [?\C-v])
         ([?\C-b] . [left])
         ([?\M-b] . [C-left])
         ([?\C-f] . [right])
@@ -121,6 +124,14 @@
         ([?\C-s] . [?\C-f])))
 ;(define-key exwm-mode-map [?\C-q] #'exwm-input-send-next-key)
 ;(setq exwm-workspace-minibuffer-position 'bottom)
+
+(defun pache/exwm-firefox-passthrough ()
+  "Disable Emacs keybindings on Firefox/Librewolf."
+  (when (and exwm-class-name (string= exwm-class-name "Firefox"))
+    (exwm-input-set-local-simulation-keys nil)))
+
+(add-hook 'exwm-manage-finish-hook #'pache/exwm-firefox-passthrough)
+
 
 ;;(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
 ;;                    (lambda () (interactive)

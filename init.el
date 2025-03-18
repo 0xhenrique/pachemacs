@@ -8,11 +8,11 @@
 (package-initialize)
 
 ;; Modules for Pachemacs
-;(load "~/.emacs.d/lisp/pache-exwm.el")
 ;(load "~/.emacs.d/lisp/pache-meow.el")
 ;(load "~/.emacs.d/lisp/pache-irc.el")
 ;(load "~/.emacs.d/lisp/pache-win.el")
 ;(load "~/.emacs.d/lisp/pache-ai.el")
+;(load "~/.emacs.d/lisp/pache-exwm.el")
 (load "~/.emacs.d/lisp/pache-ui.el")
 (load "~/.emacs.d/lisp/pache-evil.el")
 (load "~/.emacs.d/lisp/pache-keys.el")

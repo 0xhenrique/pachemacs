@@ -19,10 +19,10 @@
 (unless (package-installed-p 'doom-modeline)
   (package-install 'doom-modeline))
 
-(load-theme 'gruvbox-dark-hard t)
+(load-theme 'pache-dark t)
 
 ;; Frame transparency
-(set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+(set-frame-parameter (selected-frame) 'alpha '(93 . 93))
 ;(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -48,6 +48,13 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; Org heading sizes.
+;(set-face-attribute 'org-document-title nil :height 2.0)
+;(set-face-attribute 'org-level-1 nil :height 1.6)
+;(set-face-attribute 'org-level-2 nil :height 1.4)
+;(set-face-attribute 'org-level-3 nil :height 1.2)
+;(set-face-attribute 'org-level-4 nil :height 1.0)
 
 (provide 'pache-ui)
 ;;; pache-ui.el ends here

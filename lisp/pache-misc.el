@@ -2,10 +2,6 @@
 ;;; Code:
 ;;; Commentary:
 
-;(unless (package-installed-p 'corfu)
-;  (package-install 'corfu))
-;(unless (package-installed-p 'helm)
-;  (package-install 'helm))
 (unless (package-installed-p 'editorconfig)
   (package-install 'editorconfig))
 (unless (package-installed-p 'which-key)
@@ -16,8 +12,6 @@
   (package-install 'geiser-guile))
 (unless (package-installed-p 'magit)
   (package-install 'magit))
-;(unless (package-installed-p 'vertico)
-;  (package-install 'vertico))
 (unless (package-installed-p 'ivy)
   (package-install 'ivy))
 (unless (package-installed-p 'evil-mc)
@@ -29,9 +23,11 @@
 (unless (package-installed-p 'drag-stuff)
   (package-install 'drag-stuff))
 
-(setq-default
- indent-tabs-mode nil
- tab-width 4)
+(setq-default tab-width 4)
+(setq-default standard-indent 4)
+(setq-default electric-indent-inhibit t)
+(setq-default indent-tabs-mode t)
+(setq backward-delete-char-untabify-method 'nil)
 
 (setq read-buffer-completion-ignore-case t
       read-file-name-completion-ignore-case t
@@ -42,8 +38,8 @@
       counsel-find-file-at-point t
       completion-ignore-case t)
 
-(define-key ivy-minibuffer-map (kbd "TAB") #'ivy-partial-or-done)
-(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+;;(define-key ivy-minibuffer-map (kbd "TAB") #'ivy-partial-or-done)
+;;(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
 
 ;; Enable completion by narrowing
 ;(use-package vertico

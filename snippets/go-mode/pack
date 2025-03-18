@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: package
+# key: ~pack
+# --
+
+package $1
+
+import (
+	"$2"
+)
+
+func $1() {
+	$0
+}
