@@ -75,6 +75,10 @@
 (global-set-key (kbd "M-<left>") 'drag-stuff-left)
 (global-set-key (kbd "M-<right>") 'drag-stuff-right)
 
+;; Mimic the Windows <tab> behaviour
+;(global-set-key (kbd "M-<tab>") 'next-buffer)
+;(global-set-key (kbd "M-<iso-lefttab>") 'previous-buffer)
+
 ;; Improve directory navigation with Vertico
 ;(with-eval-after-load 'vertico
 ;  (define-key vertico-map (kbd "RET") #'vertico-directory-enter)

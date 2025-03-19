@@ -16,8 +16,8 @@
 ; "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
 
 ;; Set keyboard layout switch (US and ABNT2)
-(start-process-shell-command
- "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
+;(start-process-shell-command
+; "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
 
 ;; Set wallpaper
 ;(start-process-shell-command
@@ -28,34 +28,22 @@
 ; "picom" nil "picom")
 
 (defun pache/exwm-update-title ()
+  "Used to avoid the buffers being named like librewolf<3>."
   (pcase exwm-class-name
-    ;; This is used to avoid the buffers being named like "librewolf<3>", so we use that window's title as buffer name
-    ("LibreWolf" (exwm-workspace-rename-buffer (format "Librewolf: %s" exwm-title)))
+    ("LibreWolf" (exwm-workspace-rename-buffer (format "LibreWolf: %s" exwm-title)))
     ("multi-vterm" (exwm-workspace-rename-buffer (format "Vterm: %s" exwm-title)))
     ("Transmission-gtk" (exwm-workspace-rename-buffer (format "Transmission: %s" exwm-title)))))
 
-;; When window title updates, use it to set the buffer name
 (add-hook 'exwm-update-title-hook #'pache/exwm-update-title)
+
+;; When window title updates, use it to set the buffer name
 ;; (add-hook 'exwm-init-hook (lambda () (dashboard-refresh-buffer)))
 ;; (add-hook 'after-init-hook
 ;; 	  (lambda ()
 ;; 	    (switch-to-buffer "*dashboard*")))
 
-;(display-time-mode t)
+(display-time-mode t)
 (setq exwm-workspace-number 3)
-
-(add-hook 'exwm-update-class-hook
-          (lambda ()
-            (unless (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
-                        (string= "gimp" exwm-instance-name))
-              (exwm-workspace-rename-buffer exwm-class-name))))
-
-(add-hook 'exwm-update-title-hook
-          (lambda ()
-            (when (or (not exwm-instance-name)
-                      (string-prefix-p "sun-awt-X11-" exwm-instance-name)
-                      (string= "gimp" exwm-instance-name))
-              (exwm-workspace-rename-buffer exwm-title))))
 
 ;; A Windows PC forced me to do this since I couldn't change the keybinds there lol
 (defun pache/exwm-switch-workspace (direction)
@@ -102,8 +90,6 @@
 (setq exwm-input-simulation-keys
       '(
         ;; movement
-        ([?\C-c] . [?\C-c])
-        ([?\C-v] . [?\C-v])
         ([?\C-b] . [left])
         ([?\M-b] . [C-left])
         ([?\C-f] . [right])
@@ -122,36 +108,30 @@
         ([?\C-y] . [?\C-v])
         ;; search
         ([?\C-s] . [?\C-f])))
-;(define-key exwm-mode-map [?\C-q] #'exwm-input-send-next-key)
+
+(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 ;(setq exwm-workspace-minibuffer-position 'bottom)
+(define-key exwm-mode-map (kbd "C-c") nil)
+(add-hook 'exwm-update-class-hook
+  (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
+(add-hook 'exwm-manage-finish-hook
+          (lambda ()
+            (when (and exwm-class-name
+                       (string-match-p "LibreWolf" exwm-class-name ))
+              (exwm-input-set-local-simulation-keys nil))))
 
-(defun pache/exwm-firefox-passthrough ()
-  "Disable Emacs keybindings on Firefox/Librewolf."
-  (when (and exwm-class-name (string= exwm-class-name "Firefox"))
-    (exwm-input-set-local-simulation-keys nil)))
-
-(add-hook 'exwm-manage-finish-hook #'pache/exwm-firefox-passthrough)
-
-
-;;(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
-;;                    (lambda () (interactive)
-;;                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
-;;(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
-;;                    (lambda () (interactive)
-;;                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
+(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
+                    (lambda () (interactive)
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
+(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
+                    (lambda () (interactive)
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
 
 ;;(exwm-input-set-key (kbd "s-q") (kill-this-buffer))
 ;;(exwm-input-set-key (kbd "s-f") 'firefox-search-term)
 ;;(exwm-input-set-key (kbd "s-l") 'librewolf-search-term)
 ;;(exwm-input-set-key (kbd "s-SPC") 'ivy-switch-buffer)
 ;;(exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
-;;(global-set-key (kbd "C-s-<left>") (lambda () (interactive) (pache/exwm-switch-workspace "left")))
-;;(global-set-key (kbd "C-s-<right>") (lambda () (interactive) (pache/exwm-switch-workspace "right")))
-
-(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
-(exwm-input-set-key (kbd "<XF86AudioLowerVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
-;;(global-set-key (kbd "<XF86AudioRaiseVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
-;;(global-set-key (kbd "<XF86AudioLowerVolume>") (lambda () (interactive) (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
 
 (exwm-enable)
 

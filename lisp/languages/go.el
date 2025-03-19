@@ -38,8 +38,7 @@
               ("C-c C-f" . pache/go-format)
               ("C-c C-l" . pache/go-lint)
               ("C-c C-r" . pache/go-run)
-              ("C-c C-t" . pache/go-test))
-  :hook ((go-mode . eglot-ensure)))
+              ("C-c C-t" . pache/go-test)))
 
 (provide 'go)
 ;;; go.el ends here

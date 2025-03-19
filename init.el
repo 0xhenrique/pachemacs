@@ -12,7 +12,7 @@
 ;(load "~/.emacs.d/lisp/pache-irc.el")
 ;(load "~/.emacs.d/lisp/pache-win.el")
 ;(load "~/.emacs.d/lisp/pache-ai.el")
-;(load "~/.emacs.d/lisp/pache-exwm.el")
+(load "~/.emacs.d/lisp/pache-exwm.el")
 (load "~/.emacs.d/lisp/pache-ui.el")
 (load "~/.emacs.d/lisp/pache-evil.el")
 (load "~/.emacs.d/lisp/pache-keys.el")
@@ -28,7 +28,7 @@
       frame-resize-pixelwise t
       auto-save-default nil
       visual-line-mode nil
-      custom-file (locate-user-emacs-file "custom-vars.el")
+      custom-file (locate-user-emacs-file "~/workspace/dump/custom-vars.el")
       context-menu-mode t
       scroll-step 1
       ring-bell-function 'ignore

@@ -20,8 +20,7 @@
 	      ("C-c C-f" . 'pache/rust-format-buffer)
 	      ("C-c C-l" . 'pache/rust-run-clippy)
 	      ("C-c C-r" . 'pache/rust-run)
-	      ("C-c C-t" . 'pache/rust-test))
-  :hook (rust-mode . prettify-symbols-mode))
+	      ("C-c C-t" . 'pache/rust-test)))
 
 (provide 'rust)
 ;;; rust.el ends here

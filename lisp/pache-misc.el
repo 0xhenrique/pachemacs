@@ -3,18 +3,31 @@
 ;;; Commentary:
 
 (dolist (pkg '(editorconfig
+			   evil
+			   evil-collection
 			   which-key
-			   geiser
-			   geiser-guile
 			   magit
 			   ivy
-			   evil-mc
-			   sudo-edit
 			   sudo-edit
 			   counsel
-			   drag-stuff))
+			   drag-stuff
+			   yasnippet
+			   ;; UI
+               doom-modeline
+			   ;; Programming
+			   json-mode
+			   elixir-mode
+			   rust-mode
+			   typescript-mode
+			   vue-mode
+			   flycheck))
   (unless (package-installed-p pkg)
 	(package-install pkg)))
+
+(load-theme 'pache-dark t)
+;(set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (setq-default tab-width 4
 			  standard-indent 4
@@ -22,14 +35,21 @@
 			  indent-tabs-mode t)
 
 (setq read-buffer-completion-ignore-case t
-	  backward-delete-char-untabify-method 'nil
       read-file-name-completion-ignore-case t
+	  evil-want-keybinding nil
+      completion-ignore-case t
+	  backward-delete-char-untabify-method 'nil
       indent-line-function 'insert-tab
       global-auto-revert-non-file-buffers t
       ivy-count-format "(%d/%d) "
       ivy-use-virtual-buffers t
       counsel-find-file-at-point t
-      completion-ignore-case t)
+	  ;; UI
+	  visible-bell t
+      ring-bell-function t
+      scroll-conservatively 100
+      resize-mini-windows 'grow-only
+	  )
 
 ;; Guess major mode from file name
 (setq-default major-mode
@@ -38,13 +58,52 @@
                   (let ((buffer-file-name (buffer-name)))
                     (set-auto-mode)))))
 
+(add-to-list 'load-path
+             "~/.emacs.d/plugins/yasnippet")
+
+(use-package yasnippet
+  :ensure
+  :bind
+  (:map yas-minor-mode-map
+        ("C-'". yas-expand)
+        ([(tab)] . nil)
+        ("TAB" . nil))
+  :config
+  (add-hook 'prog-mode-hook 'yas-minor-mode))
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
    (scheme . t)))
 
+(evil-collection-init '(dired magit))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Import programming languages specifics ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load "~/.emacs.d/lisp/languages/go.el")
+(load "~/.emacs.d/lisp/languages/typescript.el")
+(load "~/.emacs.d/lisp/languages/vue.el")
+;(load "~/.emacs.d/lisp/languages/rust.el")
+
+;;;;;;;;;;;
+;; Hooks ;;
+;;;;;;;;;;;
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'prog-mode-hook #'evil-local-mode)
+
+;;;;;;;;;;;
+;; Modes ;;
+;;;;;;;;;;;
+(evil-mode t)
+(global-display-line-numbers-mode 0)
+(global-hl-line-mode t)
+(doom-modeline-mode)
+(fringe-mode t)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 (global-auto-revert-mode)
-(global-evil-mc-mode 1)
 (multiple-cursors-mode)
 (which-key-mode)
 (counsel-mode)
@@ -53,6 +112,19 @@
 (editorconfig-mode)
 (drag-stuff-global-mode t)
 (global-display-line-numbers-mode nil)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org heading sizes. ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+;(set-face-attribute 'org-document-title nil :height 2.0)
+;(set-face-attribute 'org-level-1 nil :height 1.6)
+;(set-face-attribute 'org-level-2 nil :height 1.4)
+;(set-face-attribute 'org-level-3 nil :height 1.2)
+;(set-face-attribute 'org-level-4 nil :height 1.0)
+
+(require 'evil)
+(evil-set-undo-system 'undo-redo)
 
 (provide 'pache-misc)
 ;;; pache-misc.el ends here
