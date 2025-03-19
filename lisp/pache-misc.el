@@ -29,6 +29,13 @@
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+(setq evil-want-keybinding nil)
+(evil-collection-init '(dired magit))
+(require 'evil)
+(evil-mode 1)
+(evil-set-undo-system 'undo-redo)
+(add-hook 'prog-momde-hook #'evil-local-mode)
+
 (setq-default tab-width 4
 			  standard-indent 4
 			  electric-indent-inhibit t
@@ -36,7 +43,6 @@
 
 (setq read-buffer-completion-ignore-case t
       read-file-name-completion-ignore-case t
-	  evil-want-keybinding nil
       completion-ignore-case t
 	  backward-delete-char-untabify-method 'nil
       indent-line-function 'insert-tab
@@ -76,8 +82,6 @@
  '((emacs-lisp . t)
    (scheme . t)))
 
-(evil-collection-init '(dired magit))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Import programming languages specifics ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -90,16 +94,15 @@
 ;; Hooks ;;
 ;;;;;;;;;;;
 (add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'prog-mode-hook #'evil-local-mode)
 
 ;;;;;;;;;;;
 ;; Modes ;;
 ;;;;;;;;;;;
-(evil-mode t)
+(electric-pair-mode t)
+(company-mode t)
 (global-display-line-numbers-mode 0)
 (global-hl-line-mode t)
 (doom-modeline-mode)
-(fringe-mode t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -109,10 +112,13 @@
 (counsel-mode)
 (ido-mode)
 (ivy-mode)
+(save-place-mode t)
+(flymake-mode 0)
+(savehist-mode t)
+(recentf-mode t)
 (editorconfig-mode)
 (drag-stuff-global-mode t)
 (global-display-line-numbers-mode nil)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org heading sizes. ;;
@@ -122,9 +128,6 @@
 ;(set-face-attribute 'org-level-2 nil :height 1.4)
 ;(set-face-attribute 'org-level-3 nil :height 1.2)
 ;(set-face-attribute 'org-level-4 nil :height 1.0)
-
-(require 'evil)
-(evil-set-undo-system 'undo-redo)
 
 (provide 'pache-misc)
 ;;; pache-misc.el ends here
