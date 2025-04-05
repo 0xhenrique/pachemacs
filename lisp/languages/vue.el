@@ -1,7 +1,6 @@
 ;;; vue.el --- Functions and Helpers for Vue Projects -*- lexical-binding: t -*-
 ;;; Code:
 ;;; Commentary:
-;; Define Vue Mode
 
 (defun pache/jump-to-section (section)
   "Jump to a specific SECTION in a Vue file."
@@ -19,9 +18,7 @@
               ("C-c C-b" . pache/typescript-compile)
               ("C-c C-f" . pache/typescript-format)
               ("C-c C-l" . pache/typescript-lint)
-              ("C-c C-t" . pache/typescript-test))
-  :hook
-  ((vue-mode . lsp)))
+              ("C-c C-t" . pache/typescript-test)))
 
 (provide 'vue)
 ;;; vue.el ends here

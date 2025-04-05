@@ -12,8 +12,6 @@
 			   counsel
 			   drag-stuff
 			   yasnippet
-			   ;; UI
-               doom-modeline
 			   ;; Programming
 			   json-mode
 			   elixir-mode
@@ -98,27 +96,28 @@
 ;;;;;;;;;;;
 ;; Modes ;;
 ;;;;;;;;;;;
-(electric-pair-mode t)
+(electric-pair-mode 1)
 (company-mode t)
 (global-display-line-numbers-mode 0)
-(global-hl-line-mode t)
-(doom-modeline-mode)
+(global-hl-line-mode 1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(global-auto-revert-mode)
-(multiple-cursors-mode)
-(which-key-mode)
-(counsel-mode)
-(ido-mode)
-(ivy-mode)
-(save-place-mode t)
+(global-auto-revert-mode 1)
+(multiple-cursors-mode 1)
+(which-key-mode 1)
+(counsel-mode 1)
+(ido-mode 1)
+(ivy-mode 1)
+(save-place-mode 1)
 (flymake-mode 0)
-(savehist-mode t)
-(recentf-mode t)
-(editorconfig-mode)
-(drag-stuff-global-mode t)
-(global-display-line-numbers-mode nil)
+(savehist-mode 1)
+(recentf-mode 1)
+(editorconfig-mode 1)
+(drag-stuff-global-mode 1)
+(global-display-line-numbers-mode -1)
+(global-visual-line-mode 1)
+(blink-cursor-mode -1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org heading sizes. ;;
