@@ -33,6 +33,7 @@
 
 (use-package go-mode
   :ensure t
+  :hook (go-mode . lsp)
   :bind (:map go-mode-map
               ("C-c C-b" . pache/go-build)
               ("C-c C-f" . pache/go-format)

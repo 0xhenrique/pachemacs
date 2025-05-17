@@ -52,8 +52,7 @@
 	  visible-bell t
       ring-bell-function t
       scroll-conservatively 100
-      resize-mini-windows 'grow-only
-	  )
+      resize-mini-windows 'grow-only)
 
 ;; Guess major mode from file name
 (setq-default major-mode
@@ -73,7 +72,7 @@
         ([(tab)] . nil)
         ("TAB" . nil))
   :config
-  (add-hook 'prog-mode-hook 'yas-minor-mode))
+  (add-hook 'prog-mode-hook 'yas-global-mode))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -97,7 +96,8 @@
 ;; Modes ;;
 ;;;;;;;;;;;
 (electric-pair-mode 1)
-(company-mode t)
+(doom-modeline-mode 1)
+(global-company-mode 1)
 (global-display-line-numbers-mode 0)
 (global-hl-line-mode 1)
 (menu-bar-mode -1)

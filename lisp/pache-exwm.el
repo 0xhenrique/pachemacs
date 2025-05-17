@@ -16,8 +16,8 @@
 ; "xrandr" nil "xrandr --output eDP-1 --off --output HDMI-2 --auto")
 
 ;; Set keyboard layout switch (US and ABNT2)
-;(start-process-shell-command
-; "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
+(start-process-shell-command
+ "setxkbmap" nil "setxkbmap -layout 'us,br' -option 'grp:alt_shift_toggle'")
 
 ;; Set wallpaper
 ;(start-process-shell-command
@@ -31,6 +31,7 @@
   "Used to avoid the buffers being named like librewolf<3>."
   (pcase exwm-class-name
     ("LibreWolf" (exwm-workspace-rename-buffer (format "LibreWolf: %s" exwm-title)))
+    ("Icecat" (exwm-workspace-rename-buffer (format "Icecat: %s" exwm-title)))
     ("multi-vterm" (exwm-workspace-rename-buffer (format "Vterm: %s" exwm-title)))
     ("Transmission-gtk" (exwm-workspace-rename-buffer (format "Transmission: %s" exwm-title)))))
 
@@ -43,7 +44,7 @@
 ;; 	    (switch-to-buffer "*dashboard*")))
 
 (display-time-mode t)
-(setq exwm-workspace-number 3)
+(setq exwm-workspace-number 4)
 
 ;; A Windows PC forced me to do this since I couldn't change the keybinds there lol
 (defun pache/exwm-switch-workspace (direction)
@@ -117,15 +118,16 @@
 (add-hook 'exwm-manage-finish-hook
           (lambda ()
             (when (and exwm-class-name
-                       (string-match-p "LibreWolf" exwm-class-name ))
+                       (or (string-match-p "LibreWolf" exwm-class-name)
+                           (string-match-p "Icecat" exwm-class-name)))
               (exwm-input-set-local-simulation-keys nil))))
 
 (exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
                     (lambda () (interactive)
-                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +2%")))
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ +5%")))
 (exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
                     (lambda () (interactive)
-                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -2%")))
+                      (start-process-shell-command "pactl" nil "pactl set-sink-volume @DEFAULT_SINK@ -5%")))
 
 ;;(exwm-input-set-key (kbd "s-q") (kill-this-buffer))
 ;;(exwm-input-set-key (kbd "s-f") 'firefox-search-term)
