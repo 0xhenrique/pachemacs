@@ -33,7 +33,8 @@
 
 (use-package go-mode
   :ensure t
-  :hook (go-mode . lsp)
+  :mode "\\.go\\'"
+  :hook (go-mode . eglot-ensure)
   :bind (:map go-mode-map
               ("C-c C-b" . pache/go-build)
               ("C-c C-f" . pache/go-format)

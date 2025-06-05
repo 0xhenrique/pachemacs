@@ -119,6 +119,7 @@
           (lambda ()
             (when (and exwm-class-name
                        (or (string-match-p "LibreWolf" exwm-class-name)
+						   (string-match-p "Chromium-browser" exwm-class-name)
                            (string-match-p "Icecat" exwm-class-name)))
               (exwm-input-set-local-simulation-keys nil))))
 

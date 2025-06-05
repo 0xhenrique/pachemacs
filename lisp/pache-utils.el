@@ -15,7 +15,7 @@
     (when selection
       (kill-new selection)
       (message "Copied to clipboard: %s" selection))))
-(global-set-key (kbd "C-c b") 'pache/my-consult-bookmark)
+;;(global-set-key (kbd "C-c b") 'pache/my-consult-bookmark)
 
 ;; YouTube video download
 (defun pache/download-yt ()

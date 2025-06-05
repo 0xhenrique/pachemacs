@@ -4,17 +4,20 @@
 
 (dolist (pkg '(editorconfig
 			   evil
-			   evil-collection
+			   ;;evil-collection
 			   which-key
 			   magit
 			   ivy
 			   sudo-edit
 			   counsel
+			   doom-modeline
+			   multiple-cursors
 			   drag-stuff
 			   yasnippet
 			   ;; Programming
 			   json-mode
 			   elixir-mode
+			   company
 			   rust-mode
 			   typescript-mode
 			   vue-mode
@@ -22,13 +25,18 @@
   (unless (package-installed-p pkg)
 	(package-install pkg)))
 
-(load-theme 'pache-dark t)
-;(set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+;(load-theme 'pache-dark t)
+(load-file "~/workspace/0xhenrique/pache-dark-theme/pache-dark-theme.el")
+;;(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+(setq frame-alpha-lower-limit 0)
+(set-frame-parameter (selected-frame) 'alpha '(80 0))
+(add-to-list 'default-frame-alist '(alpha 80 0))
+
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (setq evil-want-keybinding nil)
-(evil-collection-init '(dired magit))
+;;(evil-collection-init '(dired magit))
 (require 'evil)
 (evil-mode 1)
 (evil-set-undo-system 'undo-redo)
@@ -44,14 +52,18 @@
       completion-ignore-case t
 	  backward-delete-char-untabify-method 'nil
       indent-line-function 'insert-tab
-      global-auto-revert-non-file-buffers t
-      ivy-count-format "(%d/%d) "
+      ;global-auto-revert-non-file-buffers t
+      ivy-count-format ""
       ivy-use-virtual-buffers t
       counsel-find-file-at-point t
 	  ;; UI
 	  visible-bell t
       ring-bell-function t
       scroll-conservatively 100
+      ivy-use-virtual-buffers nil
+      counsel-find-file-at-point nil
+      ivy-re-builders-alist
+	  '((t . ivy--regex-plus))
       resize-mini-windows 'grow-only)
 
 ;; Guess major mode from file name
@@ -103,7 +115,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(global-auto-revert-mode 1)
+;(global-auto-revert-mode 1)
 (multiple-cursors-mode 1)
 (which-key-mode 1)
 (counsel-mode 1)

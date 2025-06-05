@@ -8,10 +8,10 @@
   :ensure t
   :config
   (setq org-static-blog-publish-title "0xhenrique"
-	org-static-blog-publish-url "https://0xhenrique.neocities.org/"
-	org-static-blog-publish-directory "~/workspace/personal/0xhenrique-blog/blog/"
-	org-static-blog-posts-directory "~/workspace/personal/0xhenrique-blog/posts/"
-	org-static-blog-drafts-directory "~/workspace/personal/0xhenrique-blog/drafts/"
+	org-static-blog-publish-url "https://blog.0xhenrique.org/"
+	org-static-blog-publish-directory "~/workspace/0xhenrique/0xhenrique-blog/blog/"
+	org-static-blog-posts-directory "~/workspace/0xhenrique/0xhenrique-blog/posts/"
+	org-static-blog-drafts-directory "~/workspace/0xhenrique/0xhenrique-blog/drafts/"
 	org-static-blog-enable-tags t
 	org-static-blog-use-preview t
 	org-static-blog-preview-ellipsis "(...)"
@@ -64,13 +64,13 @@ Preamble and Postamble are excluded, too."
   ;; This preamble is inserted at the beginning of the <body> of every page:
   ;;   This particular HTML creates a <div> with a simple linked headline
   (setq org-static-blog-page-preamble
-	"<ul class=\"menu-list\"><li class=\"menu-item\"><a href=\"https://0xhenrique.neocities.org/\">λ 0xhenrique</a></li><li class=\"menu-item\"><a href=\"https://0xhenrique.neocities.org/tag-projects\">Projects</a></li><li class=\"menu-item\"><a href=\"https://0xhenrique.neocities.org/archive\">Archive</a></li><li class=\"menu-item\"><a href=\"https://0xhenrique.neocities.org/rss.xml\">RSS</a></li><li class=\"menu-item\" style=\"float:right\"><a href=\"https://0xhenrique.neocities.org/about\">About</a></li></ul>")
+	"<ul class=\"menu-list\"><li class=\"menu-item\"><a href=\"https://blog.0xhenrique.org/\">λ 0xhenrique</a></li><li class=\"menu-item\"><a href=\"https://blog.0xhenrique.org/tag-projects\">Projects</a></li><li class=\"menu-item\"><a href=\"https://blog.0xhenrique.org/archive\">Archive</a></li><li class=\"menu-item\"><a href=\"https://blog.0xhenrique.org/rss.xml\">RSS</a></li><li class=\"menu-item\" style=\"float:right\"><a href=\"https://blog.0xhenrique.org/about\">About</a></li></ul>")
 
   ;; This postamble is inserted at the end of the <body> of every page:
   ;;   This particular HTML creates a <div> with a link to the archive page
   ;;   and a licensing stub.
   (setq org-static-blog-page-postamble
-	"<a href=\"https://0xhenrique.neocities.org/rss.xml\">My RSS Feed</a>
+	"<a href=\"https://blog.0xhenrique.org/rss.xml\">My RSS Feed</a>
 <center>Created using GNU Emacs + <a href=\"https://github.com/bastibe/org-static-blog\">Org Static Blog</a>.</center>"))
 
 (provide 'pache-blog)
