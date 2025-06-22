@@ -15,21 +15,10 @@
 (load "~/.emacs.d/lisp/pache-utils.el")
 (load "~/.emacs.d/lisp/pache-blog.el")
 
-;;(set-frame-font "Aporetic Sans Mono 11")
-
 (load-file "~/workspace/0xhenrique/esb/esb.el")
 (setq epa-pinentry-mode 'loopback)
 (setq epa-file-select-keys nil)
 (setq esb-bookmarks-file "~/workspace/0xhenrique/bookmarks/bookmarks.gpg")
-
-(global-set-key (kbd "C-c e s") 'esb-select-bookmark)
-(global-set-key (kbd "C-c e a") 'esb-add-bookmark)
-(global-set-key (kbd "C-c e d") 'esb-delete-bookmark)
-(global-set-key (kbd "C-c e l") 'esb-list-bookmarks)
-(global-set-key (kbd "C-c e e") 'esb-edit-bookmark)
-(global-set-key (kbd "C-c e r") 'esb-reload-bookmarks)
-(global-set-key (kbd "C-c e i") 'esb-initialize)
-(global-set-key (kbd "C-c e f") 'esb-flush-cache)
 
 (setq confirm-kill-emacs #'yes-or-no-p
       window-resize-pixelwise t

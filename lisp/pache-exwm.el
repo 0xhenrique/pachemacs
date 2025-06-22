@@ -135,6 +135,7 @@
 ;;(exwm-input-set-key (kbd "s-l") 'librewolf-search-term)
 ;;(exwm-input-set-key (kbd "s-SPC") 'ivy-switch-buffer)
 ;;(exwm-input-set-key (kbd "s-k") 'ivy-switch-buffer-kill)
+(exwm-input-set-key (kbd "s-s") #'pache/screenshot-with-flameshot)
 
 (exwm-enable)
 

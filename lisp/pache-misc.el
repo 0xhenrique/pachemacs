@@ -3,14 +3,11 @@
 ;;; Commentary:
 
 (dolist (pkg '(editorconfig
-			   evil
-			   ;;evil-collection
 			   which-key
 			   magit
 			   ivy
 			   sudo-edit
 			   counsel
-			   doom-modeline
 			   multiple-cursors
 			   drag-stuff
 			   yasnippet
@@ -25,22 +22,13 @@
   (unless (package-installed-p pkg)
 	(package-install pkg)))
 
-;(load-theme 'pache-dark t)
-(load-file "~/workspace/0xhenrique/pache-dark-theme/pache-dark-theme.el")
-;;(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(setq frame-alpha-lower-limit 0)
-(set-frame-parameter (selected-frame) 'alpha '(80 0))
+(load-theme 'pache-dark t)
+(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
 (add-to-list 'default-frame-alist '(alpha 80 0))
+(setq frame-alpha-lower-limit 0)
 
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-(setq evil-want-keybinding nil)
-;;(evil-collection-init '(dired magit))
-(require 'evil)
-(evil-mode 1)
-(evil-set-undo-system 'undo-redo)
-(add-hook 'prog-momde-hook #'evil-local-mode)
 
 (setq-default tab-width 4
 			  standard-indent 4
@@ -53,7 +41,6 @@
 	  backward-delete-char-untabify-method 'nil
       indent-line-function 'insert-tab
       ;global-auto-revert-non-file-buffers t
-      ivy-count-format ""
       ivy-use-virtual-buffers t
       counsel-find-file-at-point t
 	  ;; UI
@@ -82,9 +69,7 @@
   (:map yas-minor-mode-map
         ("C-'". yas-expand)
         ([(tab)] . nil)
-        ("TAB" . nil))
-  :config
-  (add-hook 'prog-mode-hook 'yas-global-mode))
+        ("TAB" . nil)))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -103,12 +88,12 @@
 ;; Hooks ;;
 ;;;;;;;;;;;
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'prog-mode-hook 'yas-global-mode)
 
 ;;;;;;;;;;;
 ;; Modes ;;
 ;;;;;;;;;;;
 (electric-pair-mode 1)
-(doom-modeline-mode 1)
 (global-company-mode 1)
 (global-display-line-numbers-mode 0)
 (global-hl-line-mode 1)
@@ -130,15 +115,6 @@
 (global-display-line-numbers-mode -1)
 (global-visual-line-mode 1)
 (blink-cursor-mode -1)
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-;; Org heading sizes. ;;
-;;;;;;;;;;;;;;;;;;;;;;;;
-;(set-face-attribute 'org-document-title nil :height 2.0)
-;(set-face-attribute 'org-level-1 nil :height 1.6)
-;(set-face-attribute 'org-level-2 nil :height 1.4)
-;(set-face-attribute 'org-level-3 nil :height 1.2)
-;(set-face-attribute 'org-level-4 nil :height 1.0)
 
 (provide 'pache-misc)
 ;;; pache-misc.el ends here
