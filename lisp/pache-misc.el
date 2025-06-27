@@ -22,10 +22,11 @@
   (unless (package-installed-p pkg)
 	(package-install pkg)))
 
-(load-theme 'pache-dark t)
+(load-theme 'gruvbox-dark-hard t)
 (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
 (add-to-list 'default-frame-alist '(alpha 80 0))
 (setq frame-alpha-lower-limit 0)
+(set-frame-font "Aporetic Sans Mono-12" nil t)
 
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -40,7 +41,6 @@
       completion-ignore-case t
 	  backward-delete-char-untabify-method 'nil
       indent-line-function 'insert-tab
-      ;global-auto-revert-non-file-buffers t
       ivy-use-virtual-buffers t
       counsel-find-file-at-point t
 	  ;; UI
@@ -100,11 +100,9 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-;(global-auto-revert-mode 1)
 (multiple-cursors-mode 1)
 (which-key-mode 1)
 (counsel-mode 1)
-(ido-mode 1)
 (ivy-mode 1)
 (save-place-mode 1)
 (flymake-mode 0)
