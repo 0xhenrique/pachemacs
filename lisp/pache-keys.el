@@ -27,6 +27,7 @@
 ;; Other
 ;(global-set-key (kbd "M-y") 'counsel-yank-pop)
 ;(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-/") 'pache/swiper-isearch-thing-at-point)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 ;(global-set-key (kbd "C-x p f") 'project-find-file)
 (global-set-key (kbd "C-x p w") 'counsel-rg)

@@ -91,6 +91,14 @@
   (let ((themes '(catppuccin gruvbox-dark-hard modus-vivendi)))
     (load-theme (nth (random (length themes)) themes) t)))
 
+(defun pache/swiper-isearch-thing-at-point ()
+  "Call `swiper-isearch` with the word at point as the initial input."
+  (interactive)
+  (let ((word (thing-at-point 'word t)))
+    (if word
+        (swiper-isearch word)
+      (swiper-isearch))))
+
 ;; Deluge Daemon + Web
 ;;(start-process-shell-command
 ;; "deluged" nil "deluged")

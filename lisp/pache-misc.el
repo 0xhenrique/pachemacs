@@ -11,6 +11,7 @@
 			   multiple-cursors
 			   drag-stuff
 			   yasnippet
+			   pache-dark-theme
 			   ;; Programming
 			   json-mode
 			   elixir-mode
@@ -22,9 +23,9 @@
   (unless (package-installed-p pkg)
 	(package-install pkg)))
 
-(load-theme 'gruvbox-dark-hard t)
-(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alpha 80 0))
+(load-theme 'pache-dark t)
+(set-frame-parameter (selected-frame) 'alpha '(85 . 85))
+;(add-to-list 'default-frame-alist '(alpha 100 0))
 (setq frame-alpha-lower-limit 0)
 (set-frame-font "Aporetic Sans Mono-12" nil t)
 
