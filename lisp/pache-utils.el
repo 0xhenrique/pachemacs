@@ -71,10 +71,16 @@
    "librewolf" nil (concat "librewolf --search " (shell-quote-argument term))))
 
 ;; Kensington Orbit scroll utility - change the '11' to the actual ID from 'xinput list' command
+;; You can also use 'xev | grep ButtonPress' to know identify the buttons
+;(start-process-shell-command
+; "xinput" nil "xinput set-prop 12 'libinput Middle Emulation Enabled' 1")
+;(start-process-shell-command
+; "xinput" nil "xinput set-prop 12 'libinput Scroll Method Enabled' 0 0 1")
+
+;; Disable top buttons in Kensington Expert (2 and 8), keep bottom buttons (1 and 3)
 (start-process-shell-command
- "xinput" nil "xinput set-prop 12 'libinput Middle Emulation Enabled' 1")
-(start-process-shell-command
- "xinput" nil "xinput set-prop 12 'libinput Scroll Method Enabled' 0 0 1")
+ "xinput" nil "xinput set-button-map 12 1 0 3 0 0 0 0 0")
+
 
 (defun pache/screenshot-with-flameshot ()
   "Make a screenshot using Flameshot."
